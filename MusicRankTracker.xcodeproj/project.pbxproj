@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA1564F62C3AA91F00278D35 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA1564F52C3AA91F00278D35 /* SDWebImageSwiftUI */; };
+		CA19B1442C3960CE00AB837E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19B1432C3960CE00AB837E /* APIService.swift */; };
+		CA19B1472C3964F500AB837E /* DailyStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */; };
+		CAA565582C3967F80079A3D2 /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA565572C3967F80079A3D2 /* ArtistModel.swift */; };
+		CAA5655A2C396F320079A3D2 /* BillboardHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */; };
+		CAA5655C2C396FAC0079A3D2 /* BillboardDateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5655B2C396FAC0079A3D2 /* BillboardDateModel.swift */; };
 		CAE8C24E2C3959E0006E808B /* MusicRankTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE8C24D2C3959E0006E808B /* MusicRankTrackerApp.swift */; };
 		CAE8C2502C3959E0006E808B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE8C24F2C3959E0006E808B /* ContentView.swift */; };
 		CAE8C2522C3959E3006E808B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAE8C2512C3959E3006E808B /* Assets.xcassets */; };
@@ -16,6 +22,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA19B1432C3960CE00AB837E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreamsModel.swift; sourceTree = "<group>"; };
+		CAA565572C3967F80079A3D2 /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
+		CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardHistoryModel.swift; sourceTree = "<group>"; };
+		CAA5655B2C396FAC0079A3D2 /* BillboardDateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardDateModel.swift; sourceTree = "<group>"; };
 		CAE8C24A2C3959E0006E808B /* MusicRankTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRankTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAE8C24D2C3959E0006E808B /* MusicRankTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRankTrackerApp.swift; sourceTree = "<group>"; };
 		CAE8C24F2C3959E0006E808B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -29,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1564F62C3AA91F00278D35 /* SDWebImageSwiftUI in Frameworks */,
 				CAE8C25D2C395A6B006E808B /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,6 +48,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA1564F72C3AADC800278D35 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CA19B1422C39607400AB837E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CA19B1432C3960CE00AB837E /* APIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CA19B1452C3964B000AB837E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */,
+				CAA565572C3967F80079A3D2 /* ArtistModel.swift */,
+				CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */,
+				CAA5655B2C396FAC0079A3D2 /* BillboardDateModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CAE8C2412C3959E0006E808B = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +93,9 @@
 		CAE8C24C2C3959E0006E808B /* MusicRankTracker */ = {
 			isa = PBXGroup;
 			children = (
+				CA1564F72C3AADC800278D35 /* Views */,
+				CA19B1452C3964B000AB837E /* Models */,
+				CA19B1422C39607400AB837E /* Services */,
 				CAE8C25E2C395CDD006E808B /* Config */,
 				CAE8C24D2C3959E0006E808B /* MusicRankTrackerApp.swift */,
 				CAE8C24F2C3959E0006E808B /* ContentView.swift */,
@@ -98,6 +139,7 @@
 			name = MusicRankTracker;
 			packageProductDependencies = (
 				CAE8C25C2C395A6B006E808B /* Alamofire */,
+				CA1564F52C3AA91F00278D35 /* SDWebImageSwiftUI */,
 			);
 			productName = MusicRankTracker;
 			productReference = CAE8C24A2C3959E0006E808B /* MusicRankTracker.app */;
@@ -129,6 +171,7 @@
 			mainGroup = CAE8C2412C3959E0006E808B;
 			packageReferences = (
 				CAE8C25B2C395A6B006E808B /* XCRemoteSwiftPackageReference "Alamofire" */,
+				CA1564F42C3AA91F00278D35 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = CAE8C24B2C3959E0006E808B /* Products */;
 			projectDirPath = "";
@@ -156,9 +199,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA19B1472C3964F500AB837E /* DailyStreamsModel.swift in Sources */,
 				CAE8C2502C3959E0006E808B /* ContentView.swift in Sources */,
 				CAE8C24E2C3959E0006E808B /* MusicRankTrackerApp.swift in Sources */,
+				CA19B1442C3960CE00AB837E /* APIService.swift in Sources */,
+				CAA565582C3967F80079A3D2 /* ArtistModel.swift in Sources */,
+				CAA5655C2C396FAC0079A3D2 /* BillboardDateModel.swift in Sources */,
 				CAE8C2602C395CE9006E808B /* Config.swift in Sources */,
+				CAA5655A2C396F320079A3D2 /* BillboardHistoryModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +414,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CA1564F42C3AA91F00278D35 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.1;
+			};
+		};
 		CAE8C25B2C395A6B006E808B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -377,6 +433,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CA1564F52C3AA91F00278D35 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA1564F42C3AA91F00278D35 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
 		CAE8C25C2C395A6B006E808B /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAE8C25B2C395A6B006E808B /* XCRemoteSwiftPackageReference "Alamofire" */;
