@@ -8,6 +8,13 @@ class APIService: ObservableObject {
     
     let baseURL: String = Config.baseURL
     
+    // For preview to insert dummy data
+    init(dailyStreams: DailyStreams? = nil, billboardHistory: BillboardHistory? = nil, billboardDataByDate: [BillboardDate]? = nil) {
+        self.dailyStreams = dailyStreams
+        self.billboardHistory = billboardHistory
+        self.billboardDataByDate = billboardDataByDate
+    }
+    
     private func fetchData<T: Decodable>(path: String, params: String) async throws -> T {
         let url = URL(string: "\(baseURL)/\(path)/\(params)")!
         
