@@ -3,10 +3,11 @@ import Foundation
 struct DailyStreams: Codable, Identifiable {
     var id = UUID()
     let artistInfo: Artist
+    let date: String
     let streamData: [StreamData]
     
     enum CodingKeys: String, CodingKey {
-        case artistInfo, streamData
+        case artistInfo, date, streamData
     }
 }
 

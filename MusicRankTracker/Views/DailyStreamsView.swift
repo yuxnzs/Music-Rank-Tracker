@@ -32,9 +32,15 @@ struct DailyStreamsView: View {
                                             .frame(width: 70, height: 70)
                                     }
                                     
-                                    Text(dailyStreams.artistInfo.name)
-                                        .font(.system(size: 24, weight: .bold))
-                                        .padding(.leading, 3)
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text(dailyStreams.artistInfo.name)
+                                            .font(.system(size: 24, weight: .bold))
+
+                                        Text("Date: \(dailyStreams.date)")
+                                            .font(.system(size: 17, weight: .bold))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding(.leading, 3)
                                 }
                                 .padding(.horizontal, 10)
                                 .padding([.top, .bottom], 10)
@@ -107,6 +113,7 @@ struct DailyStreamsView: View {
                     name: "Olivia Rodrigo",
                     image: URL(string: "https://i.scdn.co/image/ab6761610000e5ebe03a98785f3658f0b6461ec4")!
                 ),
+                date: "2024/07/08",
                 streamData: [
                     StreamData(songTitle: "vampire", totalStreams: "1,027,537,652", dailyStreams: "1,221,995"),
                     StreamData(songTitle: "traitor", totalStreams: "1,587,660,527", dailyStreams: "1,073,382"),
