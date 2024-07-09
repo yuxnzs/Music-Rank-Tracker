@@ -8,11 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		CA1564F62C3AA91F00278D35 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA1564F52C3AA91F00278D35 /* SDWebImageSwiftUI */; };
+		CA1564FD2C3AB3ED00278D35 /* DailyStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1564FC2C3AB3ED00278D35 /* DailyStreamsView.swift */; };
+		CA1564FF2C3AB42500278D35 /* BillboardHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1564FE2C3AB42500278D35 /* BillboardHistoryView.swift */; };
+		CA1565012C3AB44000278D35 /* BillboardDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1565002C3AB44000278D35 /* BillboardDateView.swift */; };
 		CA19B1442C3960CE00AB837E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19B1432C3960CE00AB837E /* APIService.swift */; };
 		CA19B1472C3964F500AB837E /* DailyStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */; };
+		CA4FC06F2C3C56320036C073 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC06E2C3C56320036C073 /* SearchBar.swift */; };
 		CAA565582C3967F80079A3D2 /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA565572C3967F80079A3D2 /* ArtistModel.swift */; };
 		CAA5655A2C396F320079A3D2 /* BillboardHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */; };
 		CAA5655C2C396FAC0079A3D2 /* BillboardDateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA5655B2C396FAC0079A3D2 /* BillboardDateModel.swift */; };
+		CACD013A2C3AB7EA00D26124 /* CurveTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACD01392C3AB7EA00D26124 /* CurveTabBar.swift */; };
+		CACD013C2C3AB80A00D26124 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACD013B2C3AB80A00D26124 /* Tab.swift */; };
 		CAE8C24E2C3959E0006E808B /* MusicRankTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE8C24D2C3959E0006E808B /* MusicRankTrackerApp.swift */; };
 		CAE8C2502C3959E0006E808B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE8C24F2C3959E0006E808B /* ContentView.swift */; };
 		CAE8C2522C3959E3006E808B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAE8C2512C3959E3006E808B /* Assets.xcassets */; };
@@ -22,11 +28,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA1564FC2C3AB3ED00278D35 /* DailyStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreamsView.swift; sourceTree = "<group>"; };
+		CA1564FE2C3AB42500278D35 /* BillboardHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardHistoryView.swift; sourceTree = "<group>"; };
+		CA1565002C3AB44000278D35 /* BillboardDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardDateView.swift; sourceTree = "<group>"; };
 		CA19B1432C3960CE00AB837E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreamsModel.swift; sourceTree = "<group>"; };
+		CA4FC06E2C3C56320036C073 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		CAA565572C3967F80079A3D2 /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
 		CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardHistoryModel.swift; sourceTree = "<group>"; };
 		CAA5655B2C396FAC0079A3D2 /* BillboardDateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardDateModel.swift; sourceTree = "<group>"; };
+		CACD01392C3AB7EA00D26124 /* CurveTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurveTabBar.swift; sourceTree = "<group>"; };
+		CACD013B2C3AB80A00D26124 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		CAE8C24A2C3959E0006E808B /* MusicRankTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicRankTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAE8C24D2C3959E0006E808B /* MusicRankTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRankTrackerApp.swift; sourceTree = "<group>"; };
 		CAE8C24F2C3959E0006E808B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,6 +63,10 @@
 		CA1564F72C3AADC800278D35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CA1564FC2C3AB3ED00278D35 /* DailyStreamsView.swift */,
+				CA1564FE2C3AB42500278D35 /* BillboardHistoryView.swift */,
+				CA1565002C3AB44000278D35 /* BillboardDateView.swift */,
+				CACD01392C3AB7EA00D26124 /* CurveTabBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -70,8 +86,17 @@
 				CAA565572C3967F80079A3D2 /* ArtistModel.swift */,
 				CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */,
 				CAA5655B2C396FAC0079A3D2 /* BillboardDateModel.swift */,
+				CACD013B2C3AB80A00D26124 /* Tab.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CA4FC06D2C3C56220036C073 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CA4FC06E2C3C56320036C073 /* SearchBar.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		CAE8C2412C3959E0006E808B = {
@@ -93,6 +118,7 @@
 		CAE8C24C2C3959E0006E808B /* MusicRankTracker */ = {
 			isa = PBXGroup;
 			children = (
+				CA4FC06D2C3C56220036C073 /* Components */,
 				CA1564F72C3AADC800278D35 /* Views */,
 				CA19B1452C3964B000AB837E /* Models */,
 				CA19B1422C39607400AB837E /* Services */,
@@ -200,11 +226,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA19B1472C3964F500AB837E /* DailyStreamsModel.swift in Sources */,
+				CA1565012C3AB44000278D35 /* BillboardDateView.swift in Sources */,
+				CA1564FF2C3AB42500278D35 /* BillboardHistoryView.swift in Sources */,
 				CAE8C2502C3959E0006E808B /* ContentView.swift in Sources */,
 				CAE8C24E2C3959E0006E808B /* MusicRankTrackerApp.swift in Sources */,
 				CA19B1442C3960CE00AB837E /* APIService.swift in Sources */,
+				CA1564FD2C3AB3ED00278D35 /* DailyStreamsView.swift in Sources */,
+				CA4FC06F2C3C56320036C073 /* SearchBar.swift in Sources */,
+				CACD013C2C3AB80A00D26124 /* Tab.swift in Sources */,
 				CAA565582C3967F80079A3D2 /* ArtistModel.swift in Sources */,
 				CAA5655C2C396FAC0079A3D2 /* BillboardDateModel.swift in Sources */,
+				CACD013A2C3AB7EA00D26124 /* CurveTabBar.swift in Sources */,
 				CAE8C2602C395CE9006E808B /* Config.swift in Sources */,
 				CAA5655A2C396F320079A3D2 /* BillboardHistoryModel.swift in Sources */,
 			);
@@ -348,6 +380,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,6 +410,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
