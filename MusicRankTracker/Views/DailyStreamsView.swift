@@ -6,12 +6,57 @@ struct DailyStreamsView: View {
     
     @State var isLoading: Bool = false
     @State private var artistName: String = ""
+    @State private var musicType: String = "songs"
+    @State private var streamType: String = "daily"
+    @State private var isSheetPresented: Bool = false
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    // Search bar
+                    // Search options
+                    VStack {
+                        HStack(alignment: .bottom, spacing: 0) {
+                            Section {
+                                Text("Type:")
+                                    .font(.system(size: 18))
+                                // Align with the picker
+                                    .padding(.vertical, 6)
+                                
+                                Picker("Type", selection: $musicType) {
+                                    Text("Songs").tag("songs")
+                                    Text("Albums").tag("albums")
+                                }
+                                .pickerStyle(MenuPickerStyle())
+                                .accentColor(.black)
+                                .padding(.horizontal)
+                                .padding(.top)
+                                .frame(width: 130, alignment: .leading)
+                                .offset(x: -20)
+                            }
+                            
+                            Section {
+                                Text("Stream:")
+                                    .font(.system(size: 18))
+                                    .padding(.vertical, 6)
+                                
+                                Picker("Stream", selection: $streamType) {
+                                    Text("Daily").tag("daily")
+                                    Text("Total").tag("total")
+                                }
+                                .pickerStyle(MenuPickerStyle())
+                                .accentColor(.black)
+                                .padding(.horizontal)
+                                .padding(.top)
+                                .frame(alignment: .leading)
+                                .offset(x: -20)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .frame(height: 40)
+                    .padding(.horizontal)
+                    
                     SearchBar(isLoading: $isLoading, artistName: $artistName, onSearch: searchArtist)
                     
                     if isLoading {
@@ -32,12 +77,12 @@ struct DailyStreamsView: View {
                                             .frame(width: 70, height: 70)
                                     }
                                     
-                                    VStack(alignment: .leading, spacing: 5) {
+                                    VStack(alignment: .leading, spacing: 6) {
                                         Text(dailyStreams.artistInfo.name)
                                             .font(.system(size: 24, weight: .bold))
-
+                                        
                                         Text("Date: \(dailyStreams.date)")
-                                            .font(.system(size: 17, weight: .bold))
+                                            .font(.system(size: 15, weight: .bold))
                                             .foregroundStyle(.secondary)
                                     }
                                     .padding(.leading, 3)
@@ -63,19 +108,26 @@ struct DailyStreamsView: View {
                                             .padding(.horizontal, 20)
                                             .font(.system(size: 18, weight: .bold))
                                         
-                                        // Song title and daily streams
+                                        // Song title and streams
                                         VStack(alignment: .leading, spacing: 5) {
                                             Text(streamData.songTitle)
                                                 .font(.system(size: 18, weight: .bold))
                                             
-                                            Text("Daily Streams: \(streamData.dailyStreams)")
-                                                .font(.system(size: 14, weight: .bold))
-                                                .foregroundStyle(.secondary)
+                                            if streamType == "daily" {
+                                                Text("Daily Streams: \(streamData.dailyStreams)")
+                                                    .font(.system(size: 14, weight: .bold))
+                                                    .foregroundStyle(.secondary)
+                                            } else {
+                                                Text("Total Streams: \(streamData.totalStreams)")
+                                                    .font(.system(size: 14, weight: .bold))
+                                                    .foregroundStyle(.secondary)
+                                            }
                                         }
                                     }
                                     // Content style
                                     // Ensure uniform vertical spacing for multi-line song titles as single-line
                                     .padding(.vertical, 10)
+                                    .padding(.trailing, 10)
                                 }
                                 // Container style
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -91,11 +143,27 @@ struct DailyStreamsView: View {
                 }
             }
             .navigationTitle("Daily Streams")
+            .toolbar {
+                Button {
+                    isSheetPresented.toggle()
+                } label: {
+                    Image(systemName: "chart.bar")
+                        .foregroundStyle(.black)
+                }
+            }
+            .sheet(isPresented: $isSheetPresented) {
+                Picker("Streams", selection: $streamType) {
+                    Text("Daily").tag("daily")
+                    Text("Total").tag("total")
+                }
+                .pickerStyle(WheelPickerStyle())
+                .presentationDetents([.fraction(0.2)])
+            }
         }
     }
     
     func searchArtist() async -> Void {
-        await apiService.getDailyStreams(artist: artistName)
+        await apiService.getDailyStreams(artist: artistName, musicType: $musicType.wrappedValue, streamType: $streamType.wrappedValue)
         
         if let _ = apiService.dailyStreams {
             print("Successfully fetched daily streams")

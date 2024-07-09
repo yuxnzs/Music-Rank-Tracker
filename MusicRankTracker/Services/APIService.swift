@@ -21,10 +21,10 @@ class APIService: ObservableObject {
         return try await AF.request(url).serializingDecodable(T.self).value
     }
     
-    func getDailyStreams(artist: String) async {
+    func getDailyStreams(artist: String, musicType: String, streamType: String) async {
         do {
             // Specify the type to let the compiler know what type to pass to the fetchData function
-            let dailyStreams: DailyStreams = try await fetchData(path: "daily-streams", params: artist)
+            let dailyStreams: DailyStreams = try await fetchData(path: "\(streamType)-streams", params: "\(artist)/\(musicType)")
             
             DispatchQueue.main.async {
                 self.dailyStreams = dailyStreams
