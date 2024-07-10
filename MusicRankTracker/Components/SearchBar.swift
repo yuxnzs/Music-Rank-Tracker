@@ -38,7 +38,7 @@ struct SearchBar: View {
         .background(.gray.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal)
-        .padding(.vertical)
+        .padding(.top)
     }
     
     // Disable button for 5 seconds
