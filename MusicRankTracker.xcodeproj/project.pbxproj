@@ -13,6 +13,9 @@
 		CA1565012C3AB44000278D35 /* BillboardDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1565002C3AB44000278D35 /* BillboardDateView.swift */; };
 		CA19B1442C3960CE00AB837E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19B1432C3960CE00AB837E /* APIService.swift */; };
 		CA19B1472C3964F500AB837E /* DailyStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */; };
+		CA3812312C3EA8250051D4DB /* TypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3812302C3EA8250051D4DB /* TypePicker.swift */; };
+		CA3812332C3EA9790051D4DB /* ArtistInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3812322C3EA9790051D4DB /* ArtistInfo.swift */; };
+		CA3812352C3EAB5E0051D4DB /* StreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3812342C3EAB5E0051D4DB /* StreamInfo.swift */; };
 		CA4FC06F2C3C56320036C073 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC06E2C3C56320036C073 /* SearchBar.swift */; };
 		CAA565582C3967F80079A3D2 /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA565572C3967F80079A3D2 /* ArtistModel.swift */; };
 		CAA5655A2C396F320079A3D2 /* BillboardHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */; };
@@ -33,6 +36,9 @@
 		CA1565002C3AB44000278D35 /* BillboardDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardDateView.swift; sourceTree = "<group>"; };
 		CA19B1432C3960CE00AB837E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		CA19B1462C3964F500AB837E /* DailyStreamsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreamsModel.swift; sourceTree = "<group>"; };
+		CA3812302C3EA8250051D4DB /* TypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePicker.swift; sourceTree = "<group>"; };
+		CA3812322C3EA9790051D4DB /* ArtistInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistInfo.swift; sourceTree = "<group>"; };
+		CA3812342C3EAB5E0051D4DB /* StreamInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfo.swift; sourceTree = "<group>"; };
 		CA4FC06E2C3C56320036C073 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		CAA565572C3967F80079A3D2 /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
 		CAA565592C396F320079A3D2 /* BillboardHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillboardHistoryModel.swift; sourceTree = "<group>"; };
@@ -95,6 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				CA4FC06E2C3C56320036C073 /* SearchBar.swift */,
+				CA3812302C3EA8250051D4DB /* TypePicker.swift */,
+				CA3812322C3EA9790051D4DB /* ArtistInfo.swift */,
+				CA3812342C3EAB5E0051D4DB /* StreamInfo.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -232,12 +241,15 @@
 				CAE8C24E2C3959E0006E808B /* MusicRankTrackerApp.swift in Sources */,
 				CA19B1442C3960CE00AB837E /* APIService.swift in Sources */,
 				CA1564FD2C3AB3ED00278D35 /* DailyStreamsView.swift in Sources */,
+				CA3812312C3EA8250051D4DB /* TypePicker.swift in Sources */,
 				CA4FC06F2C3C56320036C073 /* SearchBar.swift in Sources */,
 				CACD013C2C3AB80A00D26124 /* Tab.swift in Sources */,
 				CAA565582C3967F80079A3D2 /* ArtistModel.swift in Sources */,
+				CA3812352C3EAB5E0051D4DB /* StreamInfo.swift in Sources */,
 				CAA5655C2C396FAC0079A3D2 /* BillboardDateModel.swift in Sources */,
 				CACD013A2C3AB7EA00D26124 /* CurveTabBar.swift in Sources */,
 				CAE8C2602C395CE9006E808B /* Config.swift in Sources */,
+				CA3812332C3EA9790051D4DB /* ArtistInfo.swift in Sources */,
 				CAA5655A2C396F320079A3D2 /* BillboardHistoryModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

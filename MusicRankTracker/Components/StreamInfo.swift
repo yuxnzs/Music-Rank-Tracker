@@ -1,83 +1,57 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct DailyStreamsView: View {
-    @EnvironmentObject var apiService: APIService
-    
-    @State var isLoading: Bool = false
-    @State private var artistName: String = ""
-    @State private var musicType: String = "songs"
-    @State private var streamType: String = "daily"
-    @State private var isSheetPresented: Bool = false
+struct StreamInfo: View {
+    let rank: Int
+    let streamData: StreamData
+    let streamType: String
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack {
-                    // Search options
-                    VStack {
-                        HStack(alignment: .bottom, spacing: 0) {
-                            TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130)
-                            
-                            TypePicker(text: "Stream", selection: $streamType, options: ["daily", "total"], width: nil)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .frame(height: 30)
-                    .padding(.horizontal)
-                    
-                    SearchBar(isLoading: $isLoading, artistName: $artistName, onSearch: searchArtist)
-                    // Equal bottom padding in this View
-                        .padding(.bottom, 18)
-                    
-                    if isLoading {
+        HStack(spacing: 0) {
+            // Rank
+            Text("\(rank + 1)")
+                .frame(width: rank + 1 < 100 ? 25 : 37, alignment: .center)
+                .font(.system(size: 18, weight: .bold))
+                .padding(.trailing)
+
+            VStack {
+                HStack(spacing: 0) {
+                    WebImage(url: streamData.imageUrl) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } placeholder: {
                         ProgressView()
-                    } else {
-                        if let dailyStreams = apiService.dailyStreams {
-                            // Artist info
-                            ArtistInfo(artistImageURL: dailyStreams.artistInfo.image, artistName: dailyStreams.artistInfo.name, date: dailyStreams.date)
-                            // Equal bottom padding in this View
-                                .padding(.bottom, 18)
-                            
-                            // Stream info
-                            // Use enmerated() to get the index of the element
-                            ForEach(Array(dailyStreams.streamData.enumerated()), id: \.element.id) { index, streamData in
-                                StreamInfo(rank: index, streamData: streamData, streamType: streamType)
-                                // Equal bottom padding in this View
-                                    .padding(.bottom, 18)
+                    }
+                    .frame(width: 65, height: 65)
+                    
+                    // Song title and streams
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(streamData.musicName)
+                            .font(.system(size: 18, weight: .bold))
+                        
+                        // Use Group to avoid repeating modifiers
+                        Group {
+                            if streamType == "daily" {
+                                Text("Daily Streams: \(streamData.dailyStreams)")
+                            } else {
+                                Text("Total Streams: \(streamData.totalStreams)")
                             }
                         }
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(.secondary)
                     }
+                    .padding(10)
                 }
             }
-            .navigationTitle("Daily Streams")
-            .toolbar {
-                Button {
-                    isSheetPresented.toggle()
-                } label: {
-                    Image(systemName: "chart.bar")
-                        .foregroundStyle(.black)
-                }
-            }
-            .sheet(isPresented: $isSheetPresented) {
-                Picker("Streams", selection: $streamType) {
-                    Text("Daily").tag("daily")
-                    Text("Total").tag("total")
-                }
-                .pickerStyle(WheelPickerStyle())
-                .presentationDetents([.fraction(0.2)])
-            }
+            // Container style
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.gray.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
-    }
-    
-    func searchArtist() async -> Void {
-        await apiService.getDailyStreams(artist: artistName, musicType: $musicType.wrappedValue, streamType: $streamType.wrappedValue)
-        
-        if let _ = apiService.dailyStreams {
-            print("Successfully fetched daily streams")
-        } else {
-            print("Failed to fetch daily streams")
-        }
+        // Fixed height for single-line song titles
+        .frame(height: 65)
+        .padding(.horizontal)
     }
 }
 
