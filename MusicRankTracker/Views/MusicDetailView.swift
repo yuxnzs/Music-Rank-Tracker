@@ -13,7 +13,7 @@ struct MusicDetailView: View {
     @State private var isArtistNameTapped = false
     @State private var tappedIndices: [Int: Bool] = [:]
     
-    @State private var isCollabotatorsLoading = false
+    @State private var isCollaboratorsLoading = false
     
     // Trigger when `isTapped: binding(for: index)` is changed
     private func binding(for index: Int) -> Binding<Bool> {
@@ -89,7 +89,7 @@ struct MusicDetailView: View {
                         .fontWeight(.bold)
                         .padding(.leading)
                     
-                    if isCollabotatorsLoading {
+                    if isCollaboratorsLoading {
                         ProgressView()
                         // ArtistItem's height
                             .frame(height: 110)
@@ -124,12 +124,12 @@ struct MusicDetailView: View {
                         print("First time tapping the View")
                         Task {
                             apiService.collaborators = nil
-                            isCollabotatorsLoading = true
-                            print("\(isCollabotatorsLoading): true")
+                            isCollaboratorsLoading = true
+                            print("\(isCollaboratorsLoading): true")
                             // If has albumName, it's a song
                             await apiService.getCollaborators(musicId: streamData.musicId, isSong: streamData.albumName != nil)
-                            isCollabotatorsLoading = false
-                            print("\(isCollabotatorsLoading): false")
+                            isCollaboratorsLoading = false
+                            print("\(isCollaboratorsLoading): false")
                         }
                     }
                 } else {
