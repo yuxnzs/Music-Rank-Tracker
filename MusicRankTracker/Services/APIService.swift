@@ -6,6 +6,8 @@ class APIService: ObservableObject {
     @Published var billboardHistory: BillboardHistory? = nil
     @Published var billboardDataByDate: [BillboardDate]? = nil
     
+    @Published var collaborators: [Artist]? = nil
+    
     let baseURL: String = Config.baseURL
     
     // For preview to insert dummy data
@@ -16,7 +18,7 @@ class APIService: ObservableObject {
     }
     
     private func fetchData<T: Decodable>(path: String, params: String) async throws -> T {
-        let url = URL(string: "\(baseURL)/\(path)/\(params)")!
+        let url = URL(string: "\(baseURL)/\(path)\(params)")!
         
         return try await AF.request(url).serializingDecodable(T.self).value
     }
@@ -24,7 +26,7 @@ class APIService: ObservableObject {
     func getDailyStreams(artist: String, musicType: String, streamType: String) async {
         do {
             // Specify the type to let the compiler know what type to pass to the fetchData function
-            let dailyStreams: DailyStreams = try await fetchData(path: "\(streamType)-streams", params: "\(artist)/\(musicType)")
+            let dailyStreams: DailyStreams = try await fetchData(path: "\(streamType)-streams/", params: "\(artist)/\(musicType)")
             
             DispatchQueue.main.async {
                 self.dailyStreams = dailyStreams
@@ -34,9 +36,23 @@ class APIService: ObservableObject {
         }
     }
     
+    func getCollaborators(musicId: String, isSong: Bool) async {
+        do {
+            let params = "isSong=\(isSong)&musicId=\(musicId)"
+            
+            let collaborators: [Artist] = try await fetchData(path: "collaborators?", params: params)
+            
+            DispatchQueue.main.async {
+                self.collaborators = collaborators
+            }
+        } catch {
+            print("Error fetching collaborators: \(error)")
+        }
+    }
+    
     func getBillboardHistory(artist: String, song: String?) async {
         do {
-            let billboardHistory: BillboardHistory = try await fetchData(path: "billboard-history", params: artist)
+            let billboardHistory: BillboardHistory = try await fetchData(path: "billboard-history/", params: artist)
             
             DispatchQueue.main.async {
                 if let song = song {
@@ -56,7 +72,7 @@ class APIService: ObservableObject {
     
     func getBillboardDataByDate(date: String) async {
         do {
-            let billboardDataByDate: [BillboardDate] = try await fetchData(path: "billboard-date", params: date)
+            let billboardDataByDate: [BillboardDate] = try await fetchData(path: "billboard-date/", params: date)
             
             DispatchQueue.main.async {
                 self.billboardDataByDate = billboardDataByDate
