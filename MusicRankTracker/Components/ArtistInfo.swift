@@ -2,7 +2,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ArtistInfo: View {
-    let artistImageURL: URL
+    let artistImageURL: URL?
     let artistName: String
     let date: String?
     
