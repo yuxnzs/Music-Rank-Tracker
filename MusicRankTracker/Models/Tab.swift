@@ -65,7 +65,7 @@ enum Tab: Int, TabItem {
     
     /// The color of the active tab item
     var activeColor: Color {
-        Color(red: 0.68, green: 0.85, blue: 0.90)
+        Color.themeColor
     }
 }
 
