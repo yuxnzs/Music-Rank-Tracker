@@ -6,6 +6,9 @@ struct TypePicker: View {
     let options: [String]
     let width: CGFloat?
     
+    let sortStreams: ((_ streamData: DailyStreams, _ streamType: String) -> Void)?
+    let streamData: DailyStreams?
+    
     var body: some View {
         Text("\(text):")
             .font(.system(size: 18))
@@ -14,6 +17,11 @@ struct TypePicker: View {
         Picker(text, selection: $selection) {
             ForEach(options, id: \.self) { option in
                 Text(option.capitalized).tag(option)
+            }
+        }
+        .onChange(of: selection) {
+            if let streamData = streamData, let sortStreams = sortStreams {
+                sortStreams(streamData, selection)
             }
         }
         .pickerStyle(MenuPickerStyle())
@@ -30,6 +38,8 @@ struct TypePicker: View {
         text: "Type",
         selection: .constant("songs"),
         options: ["songs", "albums"],
-        width: 130
+        width: 130,
+        sortStreams: nil,
+        streamData: nil
     )
 }

@@ -20,9 +20,9 @@ struct DailyStreamsView: View {
                     // Search options
                     VStack {
                         HStack(alignment: .bottom, spacing: 0) {
-                            TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130)
+                            TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130, sortStreams: nil, streamData: nil)
                             
-                            TypePicker(text: "Stream", selection: $streamType, options: ["daily", "total"], width: nil)
+                            TypePicker(text: "Stream", selection: $streamType, options: ["daily", "total"], width: nil, sortStreams: apiService.sortStreams(streamData:streamType:), streamData: apiService.dailyStreams)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -81,12 +81,6 @@ struct DailyStreamsView: View {
     
     func searchArtist() async -> Void {
         await apiService.getDailyStreams(artist: artistName, musicType: $musicType.wrappedValue, streamType: $streamType.wrappedValue)
-        
-        if let _ = apiService.dailyStreams {
-            print("Successfully fetched daily streams")
-        } else {
-            print("Failed to fetch daily streams")
-        }
     }
 }
 

@@ -26,13 +26,35 @@ class APIService: ObservableObject {
     func getDailyStreams(artist: String, musicType: String, streamType: String) async {
         do {
             // Specify the type to let the compiler know what type to pass to the fetchData function
-            let dailyStreams: DailyStreams = try await fetchData(path: "\(streamType)-streams/", params: "\(artist)/\(musicType)")
+            let dailyStreams: DailyStreams = try await fetchData(path: "daily-streams/", params: "\(artist)/\(musicType)")
             
             DispatchQueue.main.async {
-                self.dailyStreams = dailyStreams
+                self.sortStreams(streamData: dailyStreams, streamType: streamType)
             }
         } catch {
             print("Error fetching daily streams: \(error)")
+        }
+    }
+    
+    // streamData as Optional to avoid TypePicker call the function before dailyStreams is set
+    func sortStreams(streamData: DailyStreams, streamType: String) {
+        var sortedStreamData = streamData.streamData
+        
+        switch streamType {
+        case "daily":
+            sortedStreamData.sort {
+                $0.dailyStreams > $1.dailyStreams
+            }
+        case "total":
+            sortedStreamData.sort {
+                $0.totalStreams > $1.totalStreams
+            }
+        default:
+            break
+        }
+        
+        DispatchQueue.main.async {
+            self.dailyStreams = DailyStreams(artistInfo: streamData.artistInfo, date: streamData.date, streamData: sortedStreamData)
         }
     }
     
