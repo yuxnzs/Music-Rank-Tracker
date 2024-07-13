@@ -7,7 +7,8 @@ struct DailyStreamsView: View {
     @State var isLoading: Bool = false
     @State private var artistName: String = ""
     @State private var musicType: String = "songs"
-    @State private var streamType: String = "daily"
+    @State private var sortingStreamType: String = "daily"
+    @State private var displayStreamType: String = "daily"
     @State private var isSheetPresented: Bool = false
     
     // Track if click the same view again
@@ -22,7 +23,7 @@ struct DailyStreamsView: View {
                         HStack(alignment: .bottom, spacing: 0) {
                             TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130, sortStreams: nil, streamData: nil)
                             
-                            TypePicker(text: "Stream", selection: $streamType, options: ["daily", "total"], width: nil, sortStreams: apiService.sortStreams(streamData:streamType:), streamData: apiService.dailyStreams)
+                            TypePicker(text: "Sort by", selection: $sortingStreamType, options: ["daily", "total"], width: nil, sortStreams: apiService.sortStreams(streamData:streamType:), streamData: apiService.dailyStreams)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -49,7 +50,7 @@ struct DailyStreamsView: View {
                                     MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
                                         .environmentObject(apiService)
                                 } label: {
-                                    StreamInfo(rank: index, streamData: streamData, streamType: streamType)
+                                    StreamInfo(rank: index, streamData: streamData, streamType: displayStreamType)
                                     // Equal bottom padding in this View
                                         .padding(.bottom, 18)
                                 }
@@ -69,18 +70,37 @@ struct DailyStreamsView: View {
                 }
             }
             .sheet(isPresented: $isSheetPresented) {
-                Picker("Streams", selection: $streamType) {
-                    Text("Daily").tag("daily")
-                    Text("Total").tag("total")
-                }
-                .pickerStyle(WheelPickerStyle())
-                .presentationDetents([.fraction(0.2)])
+                VStack(spacing: 20) {
+                        Text("Display Stream Type")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        
+                        Text("Choose how you want to view the stream counts:")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                        
+                        Picker("Stream Type", selection: $displayStreamType) {
+                            Text("Daily Streams").tag("daily")
+                            Text("Total Streams").tag("total")
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding()
+                        
+                        Text(displayStreamType == "daily" ? "Show daily stream counts" : "Show total stream counts")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .presentationDetents([.height(250)])
+                    .presentationDragIndicator(.visible)
             }
         }
     }
     
     func searchArtist() async -> Void {
-        await apiService.getDailyStreams(artist: artistName, musicType: $musicType.wrappedValue, streamType: $streamType.wrappedValue)
+        await apiService.getDailyStreams(artist: artistName, musicType: $musicType.wrappedValue, streamType: $sortingStreamType.wrappedValue)
     }
 }
 
