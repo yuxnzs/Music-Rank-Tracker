@@ -11,7 +11,7 @@ struct ArtistItem: View {
             WebImage(url: imageUrl) { image in
                 image
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .clipShape(Circle())
             } placeholder: {
                 ProgressView()
