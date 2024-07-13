@@ -21,9 +21,9 @@ struct DailyStreamsView: View {
                     // Search options
                     VStack {
                         HStack(alignment: .bottom, spacing: 0) {
-                            TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130, sortStreams: nil, streamData: nil)
+                            TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130)
                             
-                            TypePicker(text: "Sort by", selection: $sortingStreamType, options: ["daily", "total"], width: nil, sortStreams: apiService.sortStreams(streamData:streamType:), streamData: apiService.dailyStreams)
+                            TypePicker(text: "Sort by", selection: $sortingStreamType, options: ["daily", "total"], sortStreams: apiService.sortStreams(streamData:streamType:), streamData: apiService.dailyStreams)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

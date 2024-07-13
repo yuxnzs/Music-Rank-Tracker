@@ -9,6 +9,22 @@ struct TypePicker: View {
     let sortStreams: ((_ streamData: DailyStreams, _ streamType: String) -> Void)?
     let streamData: DailyStreams?
     
+    init(
+        text: String,
+        selection: Binding<String>,
+        options: [String],
+        width: CGFloat? = nil,
+        sortStreams: ((_ streamData: DailyStreams, _ streamType: String) -> Void)? = nil,
+        streamData: DailyStreams? = nil
+    ) {
+        self.text = text
+        self._selection = selection
+        self.options = options
+        self.width = width
+        self.sortStreams = sortStreams
+        self.streamData = streamData
+    }
+    
     var body: some View {
         Text("\(text):")
             .font(.system(size: 18))
