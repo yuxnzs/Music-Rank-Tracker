@@ -89,10 +89,11 @@ struct MusicDetailView: View {
                         .fontWeight(.bold)
                         .padding(.leading)
                     
+                    // Render ProgressView before collaborators are loaded
                     if isCollaboratorsLoading {
                         ProgressView()
-                        // ArtistItem's height
-                            .frame(height: 110)
+                        // Fixed height matching ArtistItem's height
+                            .frame(height: 118)
                             .frame(maxWidth: .infinity, alignment: .center)
                     } else {
                         if let collaborators = apiService.collaborators {
