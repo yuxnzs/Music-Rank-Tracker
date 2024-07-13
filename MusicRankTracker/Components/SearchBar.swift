@@ -19,6 +19,7 @@ struct SearchBar: View {
             
             Button {
                 UIApplication.shared.endEditing() // Close keyboard when button is tapped
+                if artistName.isEmpty { return }
                 isLoading = true
                 Task {
                     await onSearch()
