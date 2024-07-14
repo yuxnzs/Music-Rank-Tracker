@@ -33,6 +33,7 @@ struct DailyStreamsView: View {
                     SearchBar(isLoading: $isLoading, artistName: $artistName, onSearch: searchArtist)
                     // Equal bottom padding in this View
                         .padding(.bottom, 20)
+                        .environmentObject(apiService)
                     
                     if isLoading {
                         ProgressView()

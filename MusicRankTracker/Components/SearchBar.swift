@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SearchBar: View {
+    @EnvironmentObject var apiService: APIService
+    
     @Binding var isLoading: Bool
     @Binding var artistName: String
     
@@ -22,6 +24,7 @@ struct SearchBar: View {
                 if artistName.isEmpty { return }
                 isLoading = true
                 Task {
+                    apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
                     await onSearch()
                     isLoading = false
                 }
@@ -60,4 +63,5 @@ extension UIApplication {
 #Preview {
     SearchBar(isLoading: .constant(false), artistName: .constant(""), onSearch: { print("Search button tapped")}
     )
+    .environmentObject(APIService())
 }
