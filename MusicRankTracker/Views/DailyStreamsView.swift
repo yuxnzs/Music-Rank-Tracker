@@ -32,7 +32,7 @@ struct DailyStreamsView: View {
                     
                     SearchBar(isLoading: $isLoading, artistName: $artistName, onSearch: searchArtist)
                     // Equal bottom padding in this View
-                        .padding(.bottom, 18)
+                        .padding(.bottom, 20)
                     
                     if isLoading {
                         ProgressView()
@@ -41,7 +41,7 @@ struct DailyStreamsView: View {
                             // Artist info
                             ArtistInfo(artistImageURL: dailyStreams.artistInfo.image, artistName: dailyStreams.artistInfo.name, date: dailyStreams.date)
                             // Equal bottom padding in this View
-                                .padding(.bottom, 18)
+                                .padding(.bottom, 20)
                             
                             // Stream info
                             // Use enmerated() to get the index of the element
@@ -52,7 +52,7 @@ struct DailyStreamsView: View {
                                 } label: {
                                     StreamInfo(rank: index, streamData: streamData, streamType: displayStreamType)
                                     // Equal bottom padding in this View
-                                        .padding(.bottom, 18)
+                                        .padding(.bottom, 20)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
