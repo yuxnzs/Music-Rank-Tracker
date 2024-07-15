@@ -17,7 +17,7 @@ struct DailyStreamsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
+                LazyVStack {
                     // Search options
                     VStack {
                         HStack(alignment: .bottom, spacing: 0) {
