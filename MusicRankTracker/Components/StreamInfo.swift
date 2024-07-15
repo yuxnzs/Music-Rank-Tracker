@@ -21,7 +21,7 @@ struct StreamInfo: View {
                             .resizable()
                             .scaledToFill()
                     } placeholder: {
-                        ProgressView()
+                        ImagePlaceholder()
                     }
                     .frame(width: 65, height: 65)
                     
