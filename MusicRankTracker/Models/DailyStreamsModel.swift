@@ -14,6 +14,7 @@ struct DailyStreams: Codable, Identifiable {
 struct StreamData: Codable, Identifiable {
     let musicName: String
     let albumName: String?
+    let albumType: String?
     let totalTracks: Int?
     let trackNumber: Int?
     let duration: String
@@ -30,6 +31,6 @@ struct StreamData: Codable, Identifiable {
     var id: String { musicId }
     
     enum CodingKeys: String, CodingKey {
-        case musicName, albumName, totalTracks, trackNumber, duration, releaseDate, imageUrl, totalStreams, dailyStreams, popularity, spotifyUrl, musicId, isCollaboration
+        case musicName, albumName, albumType, totalTracks, trackNumber, duration, releaseDate, imageUrl, totalStreams, dailyStreams, popularity, spotifyUrl, musicId, isCollaboration
     }
 }

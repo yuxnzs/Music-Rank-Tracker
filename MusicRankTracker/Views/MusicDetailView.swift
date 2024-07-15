@@ -161,6 +161,7 @@ struct MusicDetailView: View {
             StreamData(
                 musicName: "vampire",
                 albumName: "GUTS",
+                albumType: nil,
                 totalTracks: nil,
                 trackNumber: 3,
                 duration: "3:39",
