@@ -3,13 +3,22 @@ import SwiftUI
 struct InfoCard: View {
     let data: String
     let title: String
-
+    
+    private var dataFontSize: CGFloat {
+        // If the data is a long number, reduce the font size to fit in the card
+        if let intValue = Int(data.replacingOccurrences(of: ",", with: "")),
+           intValue >= 10000000000 {
+            return 18
+        }
+        return 20 // Default font size
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Content
             VStack {
                 Text(data)
-                    .font(.system(size: title == "Total Streams" ? 20 : 22))
+                    .font(.system(size: dataFontSize))
                     .fontWeight(.bold)
                     .foregroundStyle(Color.themeColor)
             }
