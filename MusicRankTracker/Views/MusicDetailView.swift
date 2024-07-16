@@ -66,7 +66,7 @@ struct MusicDetailView: View {
                 .padding([.horizontal, .top])
                 
                 // Music Info
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 18) {
                     InfoRow(dataItems: [
                         // Use trackNumber.map() to safely convert Int? to String
                         (data: streamData.trackNumber.map(DataItem.intData) ?? DataItem.stringData(nil), title: "Track Number"),
@@ -83,6 +83,13 @@ struct MusicDetailView: View {
                         (data: DataItem.intData(streamData.totalStreams), title: "Total Streams"),
                         (data: DataItem.intData(streamData.dailyStreams), title: "Daily Streams")
                     ])
+                    
+                    if let availableCountries = streamData.availableMarkets, let totalTrack = streamData.totalTracks {
+                        InfoRow(dataItems: [
+                            (data: DataItem.intData(streamData.totalStreams / totalTrack), title: "Avg Track Streams"),
+                            (data: DataItem.intData(availableCountries), title: "Available Countries")
+                        ])
+                    }
                 }
                 .padding(.vertical, 20)
                 
