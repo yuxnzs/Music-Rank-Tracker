@@ -49,10 +49,12 @@ struct MusicDetailView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     HStack(alignment: .bottom, spacing: 5) {
-                        // If has album name, render albumName + releaseDate
-                        // Otherwise, render releaseDate only
-                        if let albumName = streamData.albumName {
+                        // If is song, display album name and release year
+                        // If is album, check weather it's an album or compilation + release year
+                        if let albumName = streamData.albumName { // For song
                             Text("\(albumName) • \(streamData.releaseDate.prefix(4))")
+                        } else if let albumType = streamData.albumType { // For album or compilation
+                            Text("\(albumType.capitalized) • \(streamData.releaseDate.prefix(4))")
                         } else {
                             Text(streamData.releaseDate.prefix(4))
                         }
@@ -169,7 +171,9 @@ struct MusicDetailView: View {
                 imageUrl: URL(string: "https://i.scdn.co/image/ab67616d0000b273e85259a1cae29a8d91f2093d")!,
                 totalStreams: 1033456751,
                 dailyStreams: 1220289,
-                popularity: 85, spotifyUrl: URL(string: "https://open.spotify.com/track/1kuGVB7EU95pJObxwvfwKS")!,
+                popularity: 85,
+                availableMarkets: nil,
+                spotifyUrl: URL(string: "https://open.spotify.com/track/1kuGVB7EU95pJObxwvfwKS")!,
                 musicId: "1kuGVB7EU95pJObxwvfwKS",
                 isCollaboration: false
             ),
