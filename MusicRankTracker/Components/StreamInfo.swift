@@ -24,6 +24,7 @@ struct StreamInfo: View {
                         ImagePlaceholder()
                     }
                     .frame(width: 65, height: 65)
+                    .clipped()
                     
                     // Song title and streams
                     VStack(alignment: .leading, spacing: 5) {
