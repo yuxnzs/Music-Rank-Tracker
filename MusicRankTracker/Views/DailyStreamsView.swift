@@ -108,6 +108,7 @@ struct DailyStreamsView: View {
     }
     
     func searchArtist() async -> Void {
+        apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
         await apiService.getDailyStreams(artist: artistName, musicType: musicType, streamType: sortingStreamType)
     }
 }

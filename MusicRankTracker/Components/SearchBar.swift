@@ -24,7 +24,6 @@ struct SearchBar: View {
                 if artistName.isEmpty { return }
                 isLoading = true
                 Task {
-                    apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
                     await onSearch()
                     isLoading = false
                 }
