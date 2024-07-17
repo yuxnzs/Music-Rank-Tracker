@@ -97,6 +97,13 @@ struct DailyStreamsView: View {
                     .presentationDetents([.height(250)])
                     .presentationDragIndicator(.visible)
             }
+            .alert(isPresented: $apiService.showAlert) {
+                Alert(
+                    title: Text("Artist Not Found"),
+                    message: Text(apiService.alertMessage ?? "An unknown error occurred"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
     

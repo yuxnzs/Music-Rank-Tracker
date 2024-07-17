@@ -8,6 +8,9 @@ class APIService: ObservableObject {
     
     @Published var collaborators: [Artist]? = nil
     
+    @Published var showAlert: Bool = false
+    @Published var alertMessage: String? = nil
+    
     let baseURL: String = Config.baseURL
     
     // For preview to insert dummy data
@@ -33,6 +36,10 @@ class APIService: ObservableObject {
             }
         } catch {
             print("Error fetching daily streams: \(error)")
+            DispatchQueue.main.async {
+                self.alertMessage = "No stream data available for \(artist)"
+                self.showAlert = true
+            }
         }
     }
     
