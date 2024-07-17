@@ -72,30 +72,30 @@ struct DailyStreamsView: View {
             }
             .sheet(isPresented: $isSheetPresented) {
                 VStack(spacing: 20) {
-                        Text("Display Stream Type")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.top)
-                        
-                        Text("Choose how you want to view the stream counts:")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                        
-                        Picker("Stream Type", selection: $displayStreamType) {
-                            Text("Daily Streams").tag("daily")
-                            Text("Total Streams").tag("total")
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .padding()
-                        
-                        Text(displayStreamType == "daily" ? "Show daily stream counts" : "Show total stream counts")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                    Text("Display Stream Type")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.top)
+                    
+                    Text("Choose how you want to view the stream counts:")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    
+                    Picker("Stream Type", selection: $displayStreamType) {
+                        Text("Daily Streams").tag("daily")
+                        Text("Total Streams").tag("total")
                     }
-                    .presentationDetents([.height(250)])
-                    .presentationDragIndicator(.visible)
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+                    
+                    Text(displayStreamType == "daily" ? "Show daily stream counts" : "Show total stream counts")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .presentationDetents([.height(250)])
+                .presentationDragIndicator(.visible)
             }
             .alert(isPresented: $apiService.showAlert) {
                 Alert(
