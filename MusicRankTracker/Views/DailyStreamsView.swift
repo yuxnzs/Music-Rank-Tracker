@@ -108,7 +108,7 @@ struct DailyStreamsView: View {
     }
     
     func searchArtist() async -> Void {
-        await apiService.getDailyStreams(artist: artistName, musicType: $musicType.wrappedValue, streamType: $sortingStreamType.wrappedValue)
+        await apiService.getDailyStreams(artist: artistName, musicType: musicType, streamType: sortingStreamType)
     }
 }
 
