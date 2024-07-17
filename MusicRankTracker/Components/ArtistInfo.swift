@@ -6,6 +6,12 @@ struct ArtistInfo: View {
     let artistName: String
     let date: String?
     
+    init(artistImageURL: URL?, artistName: String, date: String? = nil) {
+        self.artistImageURL = artistImageURL
+        self.artistName = artistName
+        self.date = date
+    }
+    
     var body: some View {
         VStack {
             HStack {
