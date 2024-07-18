@@ -4,7 +4,7 @@ struct DailyStreams: Codable, Identifiable {
     var id = UUID()
     let artistInfo: Artist
     let date: String
-    let streamData: [StreamData]
+    var streamData: [StreamData]
     
     enum CodingKeys: String, CodingKey {
         case artistInfo, date, streamData

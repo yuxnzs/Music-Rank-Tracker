@@ -26,26 +26,32 @@ class APIService: ObservableObject {
         return try await AF.request(url).serializingDecodable(T.self).value
     }
     
-    func getDailyStreams(artist: String, musicType: String, streamType: String) async {
+    func getDailyStreams(artist: String, musicType: String, streamType: String) async -> [StreamData] {
         do {
             // Specify the type to let the compiler know what type to pass to the fetchData function
             let dailyStreams: DailyStreams = try await fetchData(path: "daily-streams/", params: "\(artist)/\(musicType)")
             
+            let sortedData = sortStreams(streamData: dailyStreams.streamData, streamType: streamType)
+            
+            // Update dailyStreams with API data and sorted data
             DispatchQueue.main.async {
-                self.sortStreams(streamData: dailyStreams, streamType: streamType)
+                self.dailyStreams = DailyStreams(artistInfo: dailyStreams.artistInfo, date: dailyStreams.date, streamData: sortedData)
             }
+            
+            return sortedData
         } catch {
             print("Error fetching daily streams: \(error)")
             DispatchQueue.main.async {
                 self.alertMessage = "No stream data available for \(artist)"
                 self.showAlert = true
             }
+            return []
         }
     }
     
     // streamData as Optional to avoid TypePicker call the function before dailyStreams is set
-    func sortStreams(streamData: DailyStreams, streamType: String) {
-        var sortedStreamData = streamData.streamData
+    func sortStreams(streamData: [StreamData], streamType: String) -> [StreamData] {
+        var sortedStreamData = streamData
         
         switch streamType {
         case "daily":
@@ -60,8 +66,22 @@ class APIService: ObservableObject {
             break
         }
         
-        DispatchQueue.main.async {
-            self.dailyStreams = DailyStreams(artistInfo: streamData.artistInfo, date: streamData.date, streamData: sortedStreamData)
+        return sortedStreamData
+    }
+    
+    func filterData<T>(items: [T], searchText: String, keySelectors: [(T) -> String?]) -> [T] {
+        guard !searchText.isEmpty else { return [] }
+        let lowercasedSearchText = searchText.lowercased()
+        
+        return items.filter { item in
+            // Apply each key selector and check if any of the keys contain the search text
+            keySelectors.contains { keySelector in
+                // keySelector(item)?.lowercased() invokes the keySelector function which extracts a specific string field (like musicName or albumName) from the item, converts it to lowercase, and returns it
+                if let key = keySelector(item)?.lowercased(), key.contains(lowercasedSearchText) {
+                    return true
+                }
+                return false
+            }
         }
     }
     

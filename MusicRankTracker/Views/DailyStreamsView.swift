@@ -9,7 +9,14 @@ struct DailyStreamsView: View {
     @State private var musicType: String = "songs"
     @State private var sortingStreamType: String = "daily"
     @State private var displayStreamType: String = "daily"
-    @State private var isSheetPresented: Bool = false
+    @State private var displayStreamData: [StreamData] = []
+    @State private var isSortSheetPresented: Bool = false
+    @State private var isSearchTextFieldShowing: Bool = false
+    
+    @State private var searchText = ""
+    @State private var searchType = "song"
+    
+    @FocusState private var isFocused: Bool
     
     // Track if click the same view again
     @State private var lastViewedMusicId: String?
@@ -23,7 +30,13 @@ struct DailyStreamsView: View {
                         HStack(alignment: .bottom, spacing: 0) {
                             TypePicker(text: "Type", selection: $musicType, options: ["songs", "albums"], width: 130)
                             
-                            TypePicker(text: "Sort by", selection: $sortingStreamType, options: ["daily", "total"], sortStreams: apiService.sortStreams(streamData:streamType:), streamData: apiService.dailyStreams)
+                            TypePicker(
+                                text: "Sort by",
+                                selection: $sortingStreamType,
+                                options: ["daily", "total"],
+                                displayStreamData: $displayStreamData,
+                                isSorting: true
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,7 +59,7 @@ struct DailyStreamsView: View {
                             
                             // Stream info
                             // Use enmerated() to get the index of the element
-                            ForEach(Array(dailyStreams.streamData.enumerated()), id: \.element.id) { index, streamData in
+                            ForEach(Array(displayStreamData.enumerated()), id: \.element.id) { index, streamData in
                                 NavigationLink {
                                     MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
                                         .environmentObject(apiService)
@@ -63,14 +76,44 @@ struct DailyStreamsView: View {
             }
             .navigationTitle("Daily Streams")
             .toolbar {
-                Button {
-                    isSheetPresented.toggle()
-                } label: {
-                    Image(systemName: "chart.bar")
-                        .foregroundStyle(.black)
+                VStack(alignment: .trailing) {
+                    HStack(spacing: 0) {
+                        if isSearchTextFieldShowing {
+                            ToolBarTextField(
+                                newText: $searchText,
+                                displayStreamData: $displayStreamData,
+                                isFocused: $isFocused,
+                                placeholderText: "Enter song or album name",
+                                width: 280,
+                                apiService: apiService
+                            )
+                        } else {
+                            // Same width as TextField to avoid buttons moving when TextField is hidden
+                            Spacer().frame(width: 280)
+                        }
+                        
+                        Button {
+                            withAnimation(.linear) {
+                                isSearchTextFieldShowing.toggle()
+                                searchText = ""
+                            }
+                        } label: {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundStyle(.black)
+                        }
+                        
+                        Button {
+                            isSortSheetPresented.toggle()
+                        } label: {
+                            Image(systemName: "chart.bar")
+                                .foregroundStyle(.black)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
                 }
+                
             }
-            .sheet(isPresented: $isSheetPresented) {
+            .sheet(isPresented: $isSortSheetPresented) {
                 VStack(spacing: 20) {
                     Text("Display Stream Type")
                         .font(.title2)
@@ -104,12 +147,22 @@ struct DailyStreamsView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            .onAppear {
+                // Make sure displayStreamData is not nil when switching back from other Views
+                displayStreamData = apiService.dailyStreams?.streamData ?? []
+            }
+            .onDisappear {
+                // Make sure when coming back to this View, the keyboard won't pop up because of the TextField FocusState
+                withAnimation(.linear) {
+                    isSearchTextFieldShowing = false
+                }
+            }
         }
     }
     
     func searchArtist() async -> Void {
         apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
-        await apiService.getDailyStreams(artist: artistName, musicType: musicType, streamType: sortingStreamType)
+        displayStreamData = await apiService.getDailyStreams(artist: artistName, musicType: musicType, streamType: sortingStreamType)
     }
 }
 
