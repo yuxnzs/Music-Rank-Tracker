@@ -15,7 +15,7 @@ struct SearchBar: View {
     var body: some View {
         HStack(spacing: 0) {
             TextField("Enter artist name", text: $artistName)
-                .padding(.leading, 10)
+                .padding(.horizontal, 10)
                 .padding(.vertical, 5)
                 .frame(height: 50)
             
