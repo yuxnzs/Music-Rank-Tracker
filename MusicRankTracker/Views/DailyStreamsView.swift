@@ -24,7 +24,7 @@ struct DailyStreamsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack {
+                VStack {
                     // Search options
                     VStack {
                         HStack(alignment: .bottom, spacing: 0) {
@@ -57,18 +57,20 @@ struct DailyStreamsView: View {
                             // Equal bottom padding in this View
                                 .padding(.bottom, 20)
                             
-                            // Stream info
-                            // Use enmerated() to get the index of the element
-                            ForEach(Array(displayStreamData.enumerated()), id: \.element.id) { index, streamData in
-                                NavigationLink {
-                                    MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
-                                        .environmentObject(apiService)
-                                } label: {
-                                    StreamInfo(rank: index, streamData: streamData, streamType: displayStreamType)
-                                    // Equal bottom padding in this View
-                                        .padding(.bottom, 20)
+                            LazyVStack {
+                                // Stream info
+                                // Use enmerated() to get the index of the element
+                                ForEach(Array(displayStreamData.enumerated()), id: \.element.id) { index, streamData in
+                                    NavigationLink {
+                                        MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
+                                            .environmentObject(apiService)
+                                    } label: {
+                                        StreamInfo(rank: index, streamData: streamData, streamType: displayStreamType)
+                                        // Equal bottom padding in this View
+                                            .padding(.bottom, 20)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
                                 }
-                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                     }
