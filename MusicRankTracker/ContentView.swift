@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedTab: Tab = .dailyStreams
     @StateObject var apiService = APIService()
+    @StateObject var displayManager = DisplayManager()
     
     @State private var isShowingTabBar = true
     
@@ -21,6 +22,7 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea()
                 .environmentObject(apiService)
+                .environmentObject(displayManager)
                 
                 if isShowingTabBar {
                     VStack {
