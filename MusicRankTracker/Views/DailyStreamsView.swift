@@ -79,33 +79,35 @@ struct DailyStreamsView: View {
                                 displayStreamData: $displayManager.displayStreamData,
                                 isFocused: $isFocused,
                                 placeholderText: "Enter song or album name",
-                                width: 280,
+                                width: 275,
                                 apiService: apiService
                             )
                         } else {
                             // Same width as TextField to avoid buttons moving when TextField is hidden
-                            Spacer().frame(width: 280)
+                            Spacer().frame(width: 275)
                         }
                         
-                        Button {
-                            withAnimation(.linear) {
-                                displayManager.isSearchTextFieldShowing.toggle()
-                                displayManager.searchText = ""
+                        HStack(spacing: 5) {
+                            Button {
+                                withAnimation(.linear) {
+                                    displayManager.isSearchTextFieldShowing.toggle()
+                                    displayManager.searchText = ""
+                                }
+                                // Pop up keyboard when TextField is shown
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    isFocused = true
+                                }
+                            } label: {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundStyle(.black)
                             }
-                            // Pop up keyboard when TextField is shown
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                isFocused = true
+                            
+                            Button {
+                                isSortSheetPresented.toggle()
+                            } label: {
+                                Image(systemName: "chart.bar")
+                                    .foregroundStyle(.black)
                             }
-                        } label: {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundStyle(.black)
-                        }
-                        
-                        Button {
-                            isSortSheetPresented.toggle()
-                        } label: {
-                            Image(systemName: "chart.bar")
-                                .foregroundStyle(.black)
                         }
                     }
                     .frame(maxWidth: .infinity)
