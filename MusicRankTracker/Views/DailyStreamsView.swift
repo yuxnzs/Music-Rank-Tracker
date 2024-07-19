@@ -7,7 +7,7 @@ struct DailyStreamsView: View {
     
     @State var isLoading: Bool = false
     
-    @State private var isSortSheetPresented: Bool = false
+    @State private var isStreamTypeSheetPresented: Bool = false
     
     @FocusState private var isFocused: Bool
     
@@ -100,7 +100,7 @@ struct DailyStreamsView: View {
                             }
                             
                             Button {
-                                isSortSheetPresented.toggle()
+                                isStreamTypeSheetPresented.toggle()
                             } label: {
                                 Image(systemName: "chart.bar")
                                     .foregroundStyle(.black)
@@ -111,7 +111,7 @@ struct DailyStreamsView: View {
                 }
                 
             }
-            .sheet(isPresented: $isSortSheetPresented) {
+            .sheet(isPresented: $isStreamTypeSheetPresented) {
                 VStack(spacing: 20) {
                     Text("Display Stream Type")
                         .font(.title2)
