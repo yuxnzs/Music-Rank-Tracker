@@ -8,7 +8,6 @@ struct DailyStreamsView: View {
     @State var isLoading: Bool = false
     
     @State private var isSortSheetPresented: Bool = false
-    @State private var isSearchTextFieldShowing: Bool = false
     
     @FocusState private var isFocused: Bool
     
@@ -74,7 +73,7 @@ struct DailyStreamsView: View {
             .toolbar {
                 VStack(alignment: .trailing) {
                     HStack(spacing: 0) {
-                        if isSearchTextFieldShowing {
+                        if displayManager.isSearchTextFieldShowing {
                             ToolBarTextField(
                                 newText: $displayManager.searchText,
                                 displayStreamData: $displayManager.displayStreamData,
@@ -90,8 +89,12 @@ struct DailyStreamsView: View {
                         
                         Button {
                             withAnimation(.linear) {
-                                isSearchTextFieldShowing.toggle()
+                                displayManager.isSearchTextFieldShowing.toggle()
                                 displayManager.searchText = ""
+                            }
+                            // Pop up keyboard when TextField is shown
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                isFocused = true
                             }
                         } label: {
                             Image(systemName: "magnifyingglass")
@@ -142,12 +145,6 @@ struct DailyStreamsView: View {
                     message: Text(apiService.alertMessage ?? "An unknown error occurred"),
                     dismissButton: .default(Text("OK"))
                 )
-            }
-            .onDisappear {
-                // Make sure when coming back to this View, the keyboard won't pop up because of the TextField FocusState
-                withAnimation(.linear) {
-                    isSearchTextFieldShowing = false
-                }
             }
         }
     }

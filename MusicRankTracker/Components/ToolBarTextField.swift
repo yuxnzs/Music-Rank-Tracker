@@ -19,12 +19,6 @@ struct ToolBarTextField: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .font(.system(size: 16))
             .offset(x: -6)
-            .onAppear {
-                // Pop up keyboard when TextField is shown
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    isFocused = true
-                }
-            }
             .onChange(of: newText) {
                 // Update UI when searchText changes
                 displayStreamData = apiService.filterData(
