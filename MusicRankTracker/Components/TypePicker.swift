@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TypePicker: View {
     @EnvironmentObject var apiService: APIService
+    @EnvironmentObject var displayManager: DisplayManager
     
     let text: String
     @Binding var selection: String
@@ -36,7 +37,7 @@ struct TypePicker: View {
         self._displayStreamData = displayStreamData
         self.isSorting = isSorting
     }
-
+    
     var body: some View {
         Text("\(text):")
             .font(.system(size: 18))
@@ -48,9 +49,18 @@ struct TypePicker: View {
             }
         }
         .onChange(of: selection) {
-            if isSorting, let streamData = apiService.dailyStreams?.streamData {
+            guard isSorting, let streamData = apiService.dailyStreams?.streamData else { return }
+            
+            if displayManager.isFiltering {
+                // When is filtering
+                // Sort the filtered data for display
+                displayStreamData = apiService.sortStreams(streamData: displayStreamData, streamType: selection)
+                // Sort the original data too to ensure the sorting order remains the same
+                // after showing the original data when stop filtering
+                apiService.dailyStreams?.streamData = apiService.sortStreams(streamData: streamData, streamType: selection)
+            } else {
+                // When is not filtering, sort the original data
                 displayStreamData = apiService.sortStreams(streamData: streamData, streamType: selection)
-                // Update apiService streamData as well to ensure same sorting order after filtering
                 apiService.dailyStreams?.streamData = displayStreamData
             }
         }
@@ -73,4 +83,5 @@ struct TypePicker: View {
         isSorting: true
     )
     .environmentObject(APIService())
+    .environmentObject(DisplayManager())
 }

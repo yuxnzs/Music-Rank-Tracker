@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct ToolBarTextField: View {
+    @EnvironmentObject var apiService: APIService
+    @EnvironmentObject var displayManager: DisplayManager
+    
     @Binding var newText: String
     @Binding var displayStreamData: [StreamData]
     @FocusState.Binding var isFocused: Bool
     
     let placeholderText: String
     var width: CGFloat
-    var apiService: APIService
     
     var body: some View {
         TextField(placeholderText, text: $newText)
@@ -33,6 +35,8 @@ struct ToolBarTextField: View {
                 // Reset dailyStreams to show all data
                 if newText.isEmpty {
                     displayStreamData = apiService.dailyStreams?.streamData ?? []
+                } else {
+                    displayManager.isFiltering = true
                 }
             }
     }
@@ -44,7 +48,8 @@ struct ToolBarTextField: View {
         displayStreamData: .constant([]),
         isFocused: FocusState<Bool>().projectedValue,
         placeholderText: "Enter song or album name",
-        width: 250,
-        apiService: APIService()
+        width: 250
     )
+    .environmentObject(APIService())
+    .environmentObject(DisplayManager())
 }

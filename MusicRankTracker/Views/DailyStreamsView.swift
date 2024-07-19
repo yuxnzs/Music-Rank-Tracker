@@ -39,7 +39,6 @@ struct DailyStreamsView: View {
                     SearchBar(isLoading: $isLoading, artistName: $displayManager.artistName, onSearch: searchArtist)
                     // Equal bottom padding in this View
                         .padding(.bottom, 20)
-                        .environmentObject(apiService)
                     
                     if isLoading {
                         ProgressView()
@@ -56,7 +55,6 @@ struct DailyStreamsView: View {
                                 ForEach(Array(displayManager.displayStreamData.enumerated()), id: \.element.id) { index, streamData in
                                     NavigationLink {
                                         MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
-                                            .environmentObject(apiService)
                                     } label: {
                                         StreamInfo(rank: index, streamData: streamData, streamType: displayManager.displayStreamType)
                                         // Equal bottom padding in this View
@@ -79,8 +77,7 @@ struct DailyStreamsView: View {
                                 displayStreamData: $displayManager.displayStreamData,
                                 isFocused: $isFocused,
                                 placeholderText: "Enter song or album name",
-                                width: 275,
-                                apiService: apiService
+                                width: 275
                             )
                         } else {
                             // Same width as TextField to avoid buttons moving when TextField is hidden
@@ -148,6 +145,8 @@ struct DailyStreamsView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            .environmentObject(apiService)
+            .environmentObject(displayManager)
         }
     }
     
