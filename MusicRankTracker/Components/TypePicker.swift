@@ -11,8 +11,10 @@ struct TypePicker: View {
     let isSorting: Bool
     
     @Binding var displayStreamData: [StreamData]
+    @Binding var displayStreamType: String
     
     // Initializer not include streamData and displayStreamData
+    // For music type
     init(text: String, selection: Binding<String>, options: [String], width: CGFloat? = nil, isSorting: Bool = false) {
         self.text = text
         self._selection = selection
@@ -20,14 +22,17 @@ struct TypePicker: View {
         self.width = width
         self._displayStreamData = .constant([])
         self.isSorting = isSorting
+        self._displayStreamType = .constant("")
     }
     
+    // For sorting
     init(
         text: String,
         selection: Binding<String>,
         options: [String],
         width: CGFloat? = nil,
         displayStreamData: Binding<[StreamData]>,
+        displayStreamType: Binding<String>,
         isSorting: Bool
     ) {
         self.text = text
@@ -35,6 +40,7 @@ struct TypePicker: View {
         self.options = options
         self.width = width
         self._displayStreamData = displayStreamData
+        self._displayStreamType = displayStreamType
         self.isSorting = isSorting
     }
     
@@ -49,6 +55,8 @@ struct TypePicker: View {
             }
         }
         .onChange(of: selection) {
+            displayStreamType = selection // Update displayStreamType when sorting changes
+            
             guard isSorting, let streamData = apiService.dailyStreams?.streamData else { return }
             
             if displayManager.isFiltering {
@@ -80,6 +88,7 @@ struct TypePicker: View {
         options: ["songs", "albums"],
         width: 130,
         displayStreamData: .constant([]),
+        displayStreamType: .constant(""),
         isSorting: true
     )
     .environmentObject(APIService())

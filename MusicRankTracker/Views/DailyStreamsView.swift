@@ -28,6 +28,7 @@ struct DailyStreamsView: View {
                                 selection: $displayManager.sortingStreamType,
                                 options: ["daily", "total"],
                                 displayStreamData: $displayManager.displayStreamData,
+                                displayStreamType: $displayManager.displayStreamType,
                                 isSorting: true
                             )
                         }
