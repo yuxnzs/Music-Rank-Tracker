@@ -87,9 +87,12 @@ struct DailyStreamsView: View {
                         
                         HStack(spacing: 5) {
                             Button {
-                                withAnimation(.linear) {
-                                    displayManager.isSearchTextFieldShowing.toggle()
-                                    displayManager.searchText = ""
+                                // Use DispatchQueue.main.async to make sure display data reset to original after searchText is cleared
+                                DispatchQueue.main.async {
+                                    withAnimation(.linear) {
+                                        displayManager.isSearchTextFieldShowing.toggle()
+                                        displayManager.searchText = ""
+                                    }
                                 }
                                 // Pop up keyboard when TextField is shown
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -110,7 +113,6 @@ struct DailyStreamsView: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
-                
             }
             .sheet(isPresented: $isStreamTypeSheetPresented) {
                 VStack(spacing: 20) {
