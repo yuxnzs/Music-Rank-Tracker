@@ -31,7 +31,7 @@ class APIService: ObservableObject {
             // Specify the type to let the compiler know what type to pass to the fetchData function
             let dailyStreams: DailyStreams = try await fetchData(path: "daily-streams/", params: "\(artist)/\(musicType)")
             
-            let sortedData = sortStreams(streamData: dailyStreams.streamData, streamType: streamType)
+            let sortedData = sortStreams(streamData: dailyStreams.streamData, streamType: streamType, shouldReassignRanks: true)
             
             // Update dailyStreams with API data and sorted data
             DispatchQueue.main.async {
@@ -50,7 +50,7 @@ class APIService: ObservableObject {
     }
     
     // streamData as Optional to avoid TypePicker call the function before dailyStreams is set
-    func sortStreams(streamData: [StreamData], streamType: String) -> [StreamData] {
+    func sortStreams(streamData: [StreamData], streamType: String, shouldReassignRanks: Bool) -> [StreamData] {
         var sortedStreamData = streamData
         
         switch streamType {
@@ -64,6 +64,15 @@ class APIService: ObservableObject {
             }
         default:
             break
+        }
+        
+        // When is not filtering or fetching new data, reassign ranks based on the new order
+        // Make sure when user is filtering, the rank is not reassigned, maintaining the original rank order
+        if shouldReassignRanks {
+            for (index, var data) in sortedStreamData.enumerated() {
+                data.rank = index + 1
+                sortedStreamData[index] = data
+            }
         }
         
         return sortedStreamData

@@ -168,6 +168,7 @@ struct MusicDetailView: View {
         ),
         streamData:
             StreamData(
+                rank: 1,
                 musicName: "vampire",
                 albumName: "GUTS",
                 albumType: nil,

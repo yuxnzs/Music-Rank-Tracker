@@ -62,13 +62,13 @@ struct TypePicker: View {
             if displayManager.isFiltering {
                 // When is filtering
                 // Sort the filtered data for display
-                displayStreamData = apiService.sortStreams(streamData: displayStreamData, streamType: selection)
+                displayStreamData = apiService.sortStreams(streamData: displayStreamData, streamType: selection, shouldReassignRanks: false)
                 // Sort the original data too to ensure the sorting order remains the same
                 // after showing the original data when stop filtering
-                apiService.dailyStreams?.streamData = apiService.sortStreams(streamData: streamData, streamType: selection)
+                apiService.dailyStreams?.streamData = apiService.sortStreams(streamData: streamData, streamType: selection, shouldReassignRanks: false)
             } else {
                 // When is not filtering, sort the original data
-                displayStreamData = apiService.sortStreams(streamData: streamData, streamType: selection)
+                displayStreamData = apiService.sortStreams(streamData: streamData, streamType: selection, shouldReassignRanks: true)
                 apiService.dailyStreams?.streamData = displayStreamData
             }
         }
