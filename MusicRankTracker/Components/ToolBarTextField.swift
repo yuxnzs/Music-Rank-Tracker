@@ -35,6 +35,7 @@ struct ToolBarTextField: View {
                 // Reset dailyStreams to show all data
                 if newText.isEmpty {
                     displayStreamData = apiService.dailyStreams?.streamData ?? []
+                    displayManager.isFiltering = false
                 } else {
                     displayManager.isFiltering = true
                 }
