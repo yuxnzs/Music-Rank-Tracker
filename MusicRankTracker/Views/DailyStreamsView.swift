@@ -78,7 +78,8 @@ struct DailyStreamsView: View {
                                 displayStreamData: $displayManager.displayStreamData,
                                 isFocused: $isFocused,
                                 placeholderText: "Enter song or album name",
-                                width: 275
+                                width: 275,
+                                onChange: handleTextChange
                             )
                         } else {
                             // Same width as TextField to avoid buttons moving when TextField is hidden
@@ -87,17 +88,7 @@ struct DailyStreamsView: View {
                         
                         HStack(spacing: 5) {
                             Button {
-                                // Use DispatchQueue.main.async to make sure display data reset to original after searchText is cleared
-                                DispatchQueue.main.async {
-                                    withAnimation(.linear) {
-                                        displayManager.isSearchTextFieldShowing.toggle()
-                                        displayManager.searchText = ""
-                                    }
-                                }
-                                // Pop up keyboard when TextField is shown
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    isFocused = true
-                                }
+                                filterButtonAction()
                             } label: {
                                 Image(systemName: "magnifyingglass")
                                     .foregroundStyle(.black)
@@ -156,6 +147,46 @@ struct DailyStreamsView: View {
     func searchArtist() async -> Void {
         apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
         displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.artistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
+    }
+    
+    // Pass to ToolBarTextField's onChange
+    func handleTextChange(_ newText: Binding<String>) {
+        // Update UI when searchText changes
+        displayManager.displayStreamData = apiService.filterData(
+            items: apiService.dailyStreams?.streamData ?? [],
+            searchText: newText.wrappedValue,
+            keySelectors: [
+                { $0.musicName },
+                { $0.albumName }
+            ]
+        )
+        
+        if newText.wrappedValue.isEmpty {
+            displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
+            displayManager.isFiltering = false
+        } else {
+            displayManager.isFiltering = true
+        }
+    }
+    
+    func filterButtonAction() {
+        // Use DispatchQueue.main.async to make sure display data reset to original after searchText is cleared
+        DispatchQueue.main.async {
+            withAnimation(.linear) {
+                displayManager.isSearchTextFieldShowing.toggle()
+                displayManager.searchText = ""
+                // When searchText is cleard from here, ToolBarTextField's onChange cannot be triggered
+                // So need to handle it manually
+                if displayManager.searchText.isEmpty {
+                    displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
+                    displayManager.isFiltering = false
+                }
+            }
+        }
+        // Pop up keyboard when TextField is shown
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            isFocused = true
+        }
     }
 }
 
