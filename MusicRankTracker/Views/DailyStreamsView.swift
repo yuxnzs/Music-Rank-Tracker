@@ -21,14 +21,17 @@ struct DailyStreamsView: View {
                     // Search options
                     VStack {
                         HStack(alignment: .bottom, spacing: 0) {
-                            TypePicker(text: "Type", selection: $displayManager.musicType, options: ["songs", "albums"], width: 130)
+                            TypePicker(
+                                text: "Type",
+                                selection: $displayManager.musicType,
+                                options: ["songs", "albums"],
+                                width: 130
+                            )
                             
                             TypePicker(
                                 text: "Sort by",
                                 selection: $displayManager.sortingStreamType,
                                 options: ["daily", "total"],
-                                displayStreamData: $displayManager.displayStreamData,
-                                displayStreamType: $displayManager.displayStreamType,
                                 isSorting: true
                             )
                         }
