@@ -20,7 +20,9 @@ struct ToolBarTextField: View {
             .font(.system(size: 16))
             .offset(x: -6)
             .onChange(of: newText) {
-                onChange($newText)
+                withAnimation(.linear) {
+                    onChange($newText)
+                }
             }
     }
 }
