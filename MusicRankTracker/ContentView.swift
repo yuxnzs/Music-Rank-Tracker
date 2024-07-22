@@ -9,7 +9,7 @@ struct ContentView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
+            ZStack(alignment: .bottom) {
                 VStack {
                     switch selectedTab {
                     case .dailyStreams:
