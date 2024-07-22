@@ -5,11 +5,13 @@ struct ArtistInfo: View {
     let artistImageURL: URL?
     let artistName: String
     let date: String?
+    let totalCount: Int
     
-    init(artistImageURL: URL?, artistName: String, date: String? = nil) {
+    init(artistImageURL: URL?, artistName: String, date: String? = nil, totalCount: Int) {
         self.artistImageURL = artistImageURL
         self.artistName = artistName
         self.date = date
+        self.totalCount = totalCount
     }
     
     var body: some View {
@@ -30,11 +32,9 @@ struct ArtistInfo: View {
                     Text(artistName)
                         .font(.system(size: 24, weight: .bold))
                     
-                    if let date = date {
-                        Text("Date: \(date)")
-                            .font(.system(size: 15, weight: .bold))
-                            .foregroundStyle(.secondary)
-                    }
+                    Text(date != nil ? "Date: \(date!) • Total: \(totalCount)" : "Total: \(totalCount)")
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundStyle(.secondary)
                 }
                 .padding(.leading, 3)
             }
@@ -51,7 +51,8 @@ struct ArtistInfo: View {
     ArtistInfo(
         artistImageURL: URL(string: "https://i.scdn.co/image/ab6761610000e5ebe03a98785f3658f0b6461ec4")!,
         artistName: "Olivia Rodrigo",
-        date: "2024-07-10"
+        date: "2024-07-10",
+        totalCount: 10
     )
     .padding()
 }

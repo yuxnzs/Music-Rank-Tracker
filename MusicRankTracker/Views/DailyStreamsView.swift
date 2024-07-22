@@ -52,7 +52,7 @@ struct DailyStreamsView: View {
                     } else {
                         if let dailyStreams = apiService.dailyStreams {
                             // Artist info
-                            ArtistInfo(artistImageURL: dailyStreams.artistInfo.image, artistName: dailyStreams.artistInfo.name, date: dailyStreams.date)
+                            ArtistInfo(artistImageURL: dailyStreams.artistInfo.image, artistName: dailyStreams.artistInfo.name, date: dailyStreams.date, totalCount: dailyStreams.streamData.count)
                             // Equal bottom padding in this View
                                 .padding(.bottom, 20)
                             
