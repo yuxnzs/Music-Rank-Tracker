@@ -13,7 +13,7 @@ struct ContentView: View {
                 VStack {
                     switch selectedTab {
                     case .dailyStreams:
-                        DailyStreamsView()
+                        DailyStreamsView(isShowingTabBar: $isShowingTabBar, bottomSafeArea: geometry.safeAreaInsets.bottom)
                     case .billboardHistory:
                         BillboardHistoryView()
                     case .billboardDate:

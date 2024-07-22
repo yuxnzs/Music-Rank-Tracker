@@ -4,6 +4,8 @@ import SDWebImageSwiftUI
 struct DailyStreamsView: View {
     @EnvironmentObject var apiService: APIService
     @EnvironmentObject var displayManager: DisplayManager
+    @Binding var isShowingTabBar: Bool
+    let bottomSafeArea: CGFloat
     
     @State var isLoading: Bool = false
     
@@ -60,6 +62,16 @@ struct DailyStreamsView: View {
                                 ForEach(displayManager.displayStreamData, id: \.id) { streamData in
                                     NavigationLink {
                                         MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
+                                            .onAppear {
+                                                withAnimation {
+                                                    isShowingTabBar = false
+                                                }
+                                            }
+                                            .onDisappear {
+                                                withAnimation {
+                                                    isShowingTabBar = true
+                                                }
+                                            }
                                     } label: {
                                         StreamInfo(rank: streamData.rank, streamData: streamData, streamType: displayManager.displayStreamType)
                                         // Equal bottom padding in this View
@@ -68,6 +80,7 @@ struct DailyStreamsView: View {
                                     .buttonStyle(PlainButtonStyle())
                                 }
                             }
+                            .padding(.bottom, isShowingTabBar ? bottomSafeArea + 20 : 0)
                         }
                     }
                 }
@@ -199,7 +212,7 @@ struct DailyStreamsView: View {
 }
 
 #Preview {
-    DailyStreamsView()
+    DailyStreamsView(isShowingTabBar: .constant(true), bottomSafeArea: 34)
         .environmentObject(APIService(
             dailyStreams: DailyStreams(
                 artistInfo: Artist(

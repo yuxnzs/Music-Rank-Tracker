@@ -57,7 +57,7 @@ struct StreamInfo: View {
 }
 
 #Preview {
-    DailyStreamsView()
+    DailyStreamsView(isShowingTabBar: .constant(true), bottomSafeArea: 20)
         .environmentObject(APIService(
             dailyStreams: DailyStreams(
                 artistInfo: Artist(
