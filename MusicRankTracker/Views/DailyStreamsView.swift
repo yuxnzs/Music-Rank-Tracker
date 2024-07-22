@@ -78,7 +78,7 @@ struct DailyStreamsView: View {
                     HStack(spacing: 0) {
                         if displayManager.isSearchTextFieldShowing {
                             ToolBarTextField(
-                                newText: $displayManager.searchText,
+                                searchText: $displayManager.searchText,
                                 displayStreamData: $displayManager.displayStreamData,
                                 isFocused: $isFocused,
                                 placeholderText: "Enter song or album name",
@@ -154,14 +154,14 @@ struct DailyStreamsView: View {
     }
     
     // Pass to ToolBarTextField's onChange
-    func handleTextChange(_ newText: Binding<String>) {
+    func handleTextChange(_ searchText: Binding<String>) {
         // Update UI when searchText changes
         filterAndUpdateDisplayStreamData(keySelectors: [
             { $0.musicName },
             { $0.albumName }
         ])
         
-        if newText.wrappedValue.isEmpty {
+        if searchText.wrappedValue.isEmpty {
             displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
             displayManager.isFiltering = false
         } else {

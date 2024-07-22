@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ToolBarTextField: View {
-    @Binding var newText: String
+    @Binding var searchText: String
     @Binding var displayStreamData: [StreamData]
     @FocusState.Binding var isFocused: Bool
     
@@ -10,7 +10,7 @@ struct ToolBarTextField: View {
     var onChange: (Binding<String>) -> Void
     
     var body: some View {
-        TextField(placeholderText, text: $newText)
+        TextField(placeholderText, text: $searchText)
             .focused($isFocused)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
@@ -19,9 +19,9 @@ struct ToolBarTextField: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .font(.system(size: 16))
             .offset(x: -6)
-            .onChange(of: newText) {
+            .onChange(of: searchText) {
                 withAnimation(.linear) {
-                    onChange($newText)
+                    onChange($searchText)
                 }
             }
     }
@@ -29,7 +29,7 @@ struct ToolBarTextField: View {
 
 #Preview {
     ToolBarTextField(
-        newText: .constant(""),
+        searchText: .constant(""),
         displayStreamData: .constant([]),
         isFocused: FocusState<Bool>().projectedValue,
         placeholderText: "Enter song or album name",
