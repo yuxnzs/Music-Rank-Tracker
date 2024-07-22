@@ -137,18 +137,13 @@ struct MusicDetailView: View {
             .onAppear {
                 if streamData.isCollaboration {
                     // If is collaboration and was just tapped, don't call API again
-                    if streamData.musicId == lastViewedMusicId {
-                        print("Tapping the view again")
-                    } else {
-                        print("First time tapping the View")
+                    if streamData.musicId != lastViewedMusicId {
                         Task {
                             apiService.collaborators = nil
                             isCollaboratorsLoading = true
-                            print("\(isCollaboratorsLoading): true")
                             // If has albumName, it's a song
                             await apiService.getCollaborators(musicId: streamData.musicId, isSong: streamData.albumName != nil)
                             isCollaboratorsLoading = false
-                            print("\(isCollaboratorsLoading): false")
                         }
                     }
                 } else {
