@@ -32,7 +32,8 @@ struct DailyStreamsView: View {
                                 text: "Sort by",
                                 selection: $displayManager.sortingStreamType,
                                 options: ["daily", "total"],
-                                isSorting: true
+                                isSorting: true,
+                                onFilter: filterAndUpdateDisplayStreamData
                             )
                         }
                     }
@@ -155,14 +156,10 @@ struct DailyStreamsView: View {
     // Pass to ToolBarTextField's onChange
     func handleTextChange(_ newText: Binding<String>) {
         // Update UI when searchText changes
-        displayManager.displayStreamData = apiService.filterData(
-            items: apiService.dailyStreams?.streamData ?? [],
-            searchText: newText.wrappedValue,
-            keySelectors: [
-                { $0.musicName },
-                { $0.albumName }
-            ]
-        )
+        filterAndUpdateDisplayStreamData(keySelectors: [
+            { $0.musicName },
+            { $0.albumName }
+        ])
         
         if newText.wrappedValue.isEmpty {
             displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
@@ -190,6 +187,14 @@ struct DailyStreamsView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             isFocused = true
         }
+    }
+    
+    func filterAndUpdateDisplayStreamData(keySelectors: [(StreamData) -> String?]) {
+        displayManager.displayStreamData = apiService.filterData(
+            items: apiService.dailyStreams?.streamData ?? [],
+            searchText: displayManager.searchText,
+            keySelectors: keySelectors
+        )
     }
 }
 
