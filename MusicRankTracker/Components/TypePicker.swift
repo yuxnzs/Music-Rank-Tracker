@@ -32,9 +32,9 @@ struct TypePicker: View {
             }
         }
         .onChange(of: selection) {
-            displayManager.displayStreamType = selection // Update displayStreamType when sorting changes
-            
             guard isSorting, let streamData = apiService.dailyStreams?.streamData else { return }
+            
+            displayManager.displayStreamType = selection // Update displayStreamType when sorting changes
             
             withAnimation(.linear) {
                 if displayManager.isFiltering {
