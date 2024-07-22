@@ -80,7 +80,7 @@ struct DailyStreamsView: View {
                                     .buttonStyle(PlainButtonStyle())
                                 }
                             }
-                            .padding(.bottom, isShowingTabBar ? bottomSafeArea + 20 : 0)
+                            .padding(.bottom, bottomSafeArea + 20)
                         }
                     }
                 }
