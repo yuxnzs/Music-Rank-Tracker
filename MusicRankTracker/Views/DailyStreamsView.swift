@@ -58,7 +58,6 @@ struct DailyStreamsView: View {
                             
                             LazyVStack {
                                 // Stream info
-                                // Use enmerated() to get the index of the element
                                 ForEach(displayManager.displayStreamData, id: \.id) { streamData in
                                     NavigationLink {
                                         MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
