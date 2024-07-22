@@ -87,39 +87,18 @@ struct DailyStreamsView: View {
             }
             .navigationTitle("Daily Streams")
             .toolbar {
-                VStack(alignment: .trailing) {
-                    HStack(spacing: 0) {
-                        if displayManager.isSearchTextFieldShowing {
-                            ToolBarTextField(
-                                searchText: $displayManager.searchText,
-                                isFocused: $isFocused,
-                                placeholderText: "Enter song or album name",
-                                width: 275,
-                                onChange: handleTextChange
-                            )
-                        } else {
-                            // Same width as TextField to avoid buttons moving when TextField is hidden
-                            Spacer().frame(width: 275)
-                        }
-                        
-                        HStack(spacing: 5) {
-                            Button {
-                                filterButtonAction()
-                            } label: {
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundStyle(.black)
-                            }
-                            
-                            Button {
-                                isStreamTypeSheetPresented.toggle()
-                            } label: {
-                                Image(systemName: "chart.bar")
-                                    .foregroundStyle(.black)
-                            }
-                        }
+                SearchToolbar(
+                    isSearchTextFieldShowing: $displayManager.isSearchTextFieldShowing,
+                    searchText: $displayManager.searchText,
+                    isFocused: $isFocused,
+                    placeholderText: "Enter song or album name",
+                    handleTextChange: handleTextChange,
+                    buttonIcon: "chart.bar",
+                    filterButtonAction: filterButtonAction,
+                    mainButtonAction: {
+                        isStreamTypeSheetPresented.toggle()
                     }
-                    .frame(maxWidth: .infinity)
-                }
+                )
             }
             .sheet(isPresented: $isStreamTypeSheetPresented) {
                 VStack(spacing: 20) {
