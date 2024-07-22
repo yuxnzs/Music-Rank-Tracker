@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ToolBarTextField: View {
     @Binding var searchText: String
-    @Binding var displayStreamData: [StreamData]
     @FocusState.Binding var isFocused: Bool
     
     let placeholderText: String
@@ -30,7 +29,6 @@ struct ToolBarTextField: View {
 #Preview {
     ToolBarTextField(
         searchText: .constant(""),
-        displayStreamData: .constant([]),
         isFocused: FocusState<Bool>().projectedValue,
         placeholderText: "Enter song or album name",
         width: 250,

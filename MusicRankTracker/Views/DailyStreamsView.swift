@@ -92,7 +92,6 @@ struct DailyStreamsView: View {
                         if displayManager.isSearchTextFieldShowing {
                             ToolBarTextField(
                                 searchText: $displayManager.searchText,
-                                displayStreamData: $displayManager.displayStreamData,
                                 isFocused: $isFocused,
                                 placeholderText: "Enter song or album name",
                                 width: 275,
