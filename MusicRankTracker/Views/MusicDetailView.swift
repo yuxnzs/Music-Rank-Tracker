@@ -43,10 +43,17 @@ struct MusicDetailView: View {
                 
                 // Header
                 VStack(spacing: 6) {
-                    Text(streamData.musicName)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Button {
+                        if let spotifyUrl = streamData.spotifyUrl {
+                            UIApplication.shared.open(spotifyUrl)
+                        }
+                    } label: {
+                        Text(streamData.musicName)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .buttonStyle(.plain)
                     
                     HStack(alignment: .bottom, spacing: 5) {
                         // If is song, display album name and release year
