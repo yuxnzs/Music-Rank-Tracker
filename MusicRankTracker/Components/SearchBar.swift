@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct SearchBar: View {
-    @EnvironmentObject var apiService: APIService
-    
     @Binding var isLoading: Bool
     @Binding var artistName: String
     
@@ -62,5 +60,4 @@ extension UIApplication {
 #Preview {
     SearchBar(isLoading: .constant(false), artistName: .constant(""), onSearch: { print("Search button tapped")}
     )
-    .environmentObject(APIService())
 }
