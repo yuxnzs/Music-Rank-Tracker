@@ -102,7 +102,7 @@ struct MusicDetailView: View {
                 
                 // Artist Info
                 VStack(alignment: .leading) {
-                    Text("Artist")
+                    Text(streamData.isCollaboration ? "Artists" : "Artist")
                         .font(.title3)
                         .fontWeight(.bold)
                         .padding(.leading)
