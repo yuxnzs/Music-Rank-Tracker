@@ -43,7 +43,7 @@ struct DailyStreamsView: View {
                     .frame(height: 30)
                     .padding(.horizontal)
                     
-                    SearchBar(isLoading: $isLoading, artistName: $displayManager.artistName, onSearch: searchArtist)
+                    SearchBar(isLoading: $isLoading, artistName: $displayManager.dailyStreamsArtistName, onSearch: searchArtist)
                     // Equal bottom padding in this View
                         .padding(.bottom, 20)
                     
@@ -78,8 +78,8 @@ struct DailyStreamsView: View {
             .navigationTitle("Daily Streams")
             .toolbar {
                 SearchToolbar(
-                    isSearchTextFieldShowing: $displayManager.isSearchTextFieldShowing,
-                    searchText: $displayManager.searchText,
+                    isSearchTextFieldShowing: $displayManager.isDailySearchTextFieldShowing,
+                    searchText: $displayManager.dailySearchText,
                     isFocused: $isFocused,
                     placeholderText: "Enter song or album name",
                     handleTextChange: handleTextChange,
@@ -131,7 +131,7 @@ struct DailyStreamsView: View {
     
     func searchArtist() async -> Void {
         apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
-        displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.artistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
+        displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.dailyStreamsArtistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
     }
     
     // Pass to ToolBarTextField's onChange
@@ -154,11 +154,11 @@ struct DailyStreamsView: View {
         // Use DispatchQueue.main.async to make sure display data reset to original after searchText is cleared
         DispatchQueue.main.async {
             withAnimation(.linear) {
-                displayManager.isSearchTextFieldShowing.toggle()
-                displayManager.searchText = ""
+                displayManager.isDailySearchTextFieldShowing.toggle()
+                displayManager.dailySearchText = ""
                 // When searchText is cleard from here, ToolBarTextField's onChange cannot be triggered
                 // So need to handle it manually
-                if displayManager.searchText.isEmpty {
+                if displayManager.dailySearchText.isEmpty {
                     displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
                     displayManager.isFiltering = false
                 }
@@ -173,7 +173,7 @@ struct DailyStreamsView: View {
     func filterAndUpdateDisplayStreamData(keySelectors: [(StreamData) -> String?]) {
         displayManager.displayStreamData = apiService.filterData(
             items: apiService.dailyStreams?.streamData ?? [],
-            searchText: displayManager.searchText,
+            searchText: displayManager.dailySearchText,
             keySelectors: keySelectors
         )
     }
