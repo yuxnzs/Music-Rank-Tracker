@@ -56,30 +56,21 @@ struct DailyStreamsView: View {
                             // Equal bottom padding in this View
                                 .padding(.bottom, 20)
                             
-                            LazyVStack {
-                                // Stream info
-                                ForEach(displayManager.displayStreamData, id: \.id) { streamData in
-                                    NavigationLink {
-                                        MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
-                                            .onAppear {
-                                                withAnimation {
-                                                    isShowingTabBar = false
-                                                }
-                                            }
-                                            .onDisappear {
-                                                withAnimation {
-                                                    isShowingTabBar = true
-                                                }
-                                            }
-                                    } label: {
-                                        StreamInfo(rank: streamData.rank, streamData: streamData, streamType: displayManager.displayStreamType)
-                                        // Equal bottom padding in this View
-                                            .padding(.bottom, 20)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
+                            // Stream info
+                            VStack {
+                                // Render the first 10 items first to avoid stuttering behavior caused by LazyVStack
+                                ForEach(displayManager.displayStreamData.prefix(10), id: \.id) { streamData in
+                                    streamInfoLink(for: streamData, dailyStreams: dailyStreams)
                                 }
+                                
+                                // Render the rest of the items using LazyVStack for better performance
+                                LazyVStack {
+                                    ForEach(displayManager.displayStreamData.dropFirst(10), id: \.id) { streamData in
+                                        streamInfoLink(for: streamData, dailyStreams: dailyStreams)
+                                    }
+                                }
+                                .padding(.bottom, bottomSafeArea + 20)
                             }
-                            .padding(.bottom, bottomSafeArea + 20)
                         }
                     }
                 }
@@ -185,6 +176,27 @@ struct DailyStreamsView: View {
             searchText: displayManager.searchText,
             keySelectors: keySelectors
         )
+    }
+    
+    private func streamInfoLink(for streamData: StreamData, dailyStreams: DailyStreams) -> some View {
+        NavigationLink {
+            MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
+                .onAppear {
+                    withAnimation {
+                        isShowingTabBar = false
+                    }
+                }
+                .onDisappear {
+                    withAnimation {
+                        isShowingTabBar = true
+                    }
+                }
+        } label: {
+            StreamInfo(rank: streamData.rank, streamData: streamData, streamType: displayManager.displayStreamType)
+            // Equal bottom padding in this View
+                .padding(.bottom, 20)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
