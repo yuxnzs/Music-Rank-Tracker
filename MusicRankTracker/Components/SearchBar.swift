@@ -51,12 +51,6 @@ struct SearchBar: View {
     }
 }
 
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
 #Preview {
     SearchBar(isLoading: .constant(false), artistName: .constant(""), onSearch: { print("Search button tapped")}
     )

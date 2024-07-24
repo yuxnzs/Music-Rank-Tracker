@@ -15,7 +15,7 @@ struct ContentView: View {
                     case .dailyStreams:
                         DailyStreamsView(isShowingTabBar: $isShowingTabBar, bottomSafeArea: geometry.safeAreaInsets.bottom)
                     case .billboardHistory:
-                        BillboardHistoryView()
+                        BillboardHistoryView(bottomSafeArea: geometry.safeAreaInsets.bottom)
                     case .billboardDate:
                         BillboardDateView()
                     }
@@ -58,6 +58,12 @@ struct ContentView: View {
     private func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+}
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
