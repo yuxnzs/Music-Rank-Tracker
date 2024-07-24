@@ -77,18 +77,21 @@ struct DailyStreamsView: View {
             }
             .navigationTitle("Daily Streams")
             .toolbar {
-                SearchToolbar(
-                    isSearchTextFieldShowing: $displayManager.isDailySearchTextFieldShowing,
-                    searchText: $displayManager.dailySearchText,
-                    isFocused: $isFocused,
-                    placeholderText: "Enter song or album name",
-                    handleTextChange: handleTextChange,
-                    buttonIcon: "chart.bar",
-                    filterButtonAction: filterButtonAction,
-                    mainButtonAction: {
-                        isStreamTypeSheetPresented.toggle()
-                    }
-                )
+                // Center the SearchToolbar
+                ToolbarItem(placement: .principal) {
+                    SearchToolbar(
+                        isSearchTextFieldShowing: $displayManager.isDailySearchTextFieldShowing,
+                        searchText: $displayManager.dailySearchText,
+                        isFocused: $isFocused,
+                        placeholderText: "Enter song or album name",
+                        handleTextChange: handleTextChange,
+                        buttonIcon: "chart.bar",
+                        filterButtonAction: filterButtonAction,
+                        mainButtonAction: {
+                            isStreamTypeSheetPresented.toggle()
+                        }
+                    )
+                }
             }
             .sheet(isPresented: $isStreamTypeSheetPresented) {
                 VStack(spacing: 20) {

@@ -11,43 +11,44 @@ struct SearchToolbar: View {
     let mainButtonAction: () -> Void
     
     var body: some View {
-        VStack(alignment: .trailing) {
-            HStack(spacing: 0) {
+        HStack(spacing: 10) {
+            VStack {
                 if isSearchTextFieldShowing {
                     ToolBarTextField(
                         searchText: $searchText,
                         isFocused: $isFocused,
                         placeholderText: placeholderText,
-                        width: 275,
                         onChange: handleTextChange
                     )
                 } else {
                     // Same width as TextField to avoid buttons moving when TextField is hidden
-                    Spacer().frame(width: 275)
-                }
-                
-                HStack(spacing: 5) {
-                    Button {
-                        filterButtonAction()
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundStyle(.black)
-                    }
-                    
-                    Button{
-                        mainButtonAction()
-                    } label: {
-                        Image(systemName: buttonIcon)
-                            .foregroundStyle(.black)
-                    }
+                    Spacer().frame(maxWidth: .infinity)
                 }
             }
-            .frame(maxWidth: .infinity)
+            
+            HStack(spacing: 10) {
+                Button {
+                    filterButtonAction()
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.black)
+                }
+                
+                Button{
+                    mainButtonAction()
+                } label: {
+                    Image(systemName: buttonIcon)
+                        .foregroundStyle(.black)
+                    // Set fixed size to ensure that all passed-in icons won't affect the layout
+                        .frame(width: 11)
+                }
+            }
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     SearchToolbar(
         isSearchTextFieldShowing: .constant(true),
         searchText: .constant(""),
@@ -58,4 +59,5 @@ struct SearchToolbar: View {
         filterButtonAction: { },
         mainButtonAction: { }
     )
+    .padding()
 }
