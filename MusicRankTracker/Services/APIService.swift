@@ -108,20 +108,12 @@ class APIService: ObservableObject {
         }
     }
     
-    func getBillboardHistory(artist: String, song: String?) async {
+    func getBillboardHistory(artist: String) async {
         do {
             let billboardHistory: BillboardHistory = try await fetchData(path: "billboard-history/", params: artist)
             
             DispatchQueue.main.async {
-                if let song = song {
-                    // Get specific song from Billboard history
-                    let filteredSongs = billboardHistory.historyData.filter {
-                        $0.song.lowercased() == song.lowercased()
-                    }
-                    self.billboardHistory = BillboardHistory(artistInfo: billboardHistory.artistInfo, historyData: filteredSongs)
-                } else {
-                    self.billboardHistory = billboardHistory
-                }
+                self.billboardHistory = billboardHistory
             }
         } catch {
             print("Error fetching billboard history: \(error)")
