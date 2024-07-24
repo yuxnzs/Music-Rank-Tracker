@@ -43,7 +43,7 @@ struct DailyStreamsView: View {
                     .frame(height: 30)
                     .padding(.horizontal)
                     
-                    SearchBar(isLoading: $isLoading, artistName: $displayManager.dailyStreamsArtistName, onSearch: searchArtist)
+                    SearchBar(isLoading: $isLoading, artistName: $displayManager.dailyArtistName, onSearch: searchArtist)
                     // Equal bottom padding in this View
                         .padding(.bottom, 20)
                     
@@ -131,7 +131,7 @@ struct DailyStreamsView: View {
     
     func searchArtist() async -> Void {
         apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
-        displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.dailyStreamsArtistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
+        displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.dailyArtistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
     }
     
     // Pass to ToolBarTextField's onChange
