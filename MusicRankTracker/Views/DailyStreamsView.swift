@@ -34,8 +34,7 @@ struct DailyStreamsView: View {
                                 text: "Sort by",
                                 selection: $displayManager.sortingStreamType,
                                 options: ["daily", "total"],
-                                isSorting: true,
-                                onFilter: filterAndUpdateDisplayStreamData
+                                onChange: handleTypeChange
                             )
                         }
                     }
@@ -135,6 +134,36 @@ struct DailyStreamsView: View {
     func searchArtist() async -> Void {
         apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
         displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.dailyArtistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
+    }
+    
+    // Pass to TypePicker's onChange
+    func handleTypeChange(_ selection: String) {
+        guard let streamData = apiService.dailyStreams?.streamData else { return }
+        
+        displayManager.displayStreamType = selection // Update displayStreamType when sorting changes
+        
+        withAnimation(.linear) {
+            if displayManager.isFiltering {
+                // When Daily switch to Total or vice versa, sort original data first then filter
+                // Make sure when is filtering and changing the sorting type, the rank is displayed based on the sorting type
+                // And also ensure the the original data sorting order display the same sorting type after stop filtering
+                apiService.dailyStreams?.streamData = apiService.sortStreams(streamData: streamData, streamType: selection, shouldReassignRanks: true)
+                
+                // Filter before sorting display data
+                filterAndUpdateDisplayStreamData(keySelectors: [
+                    { $0.musicName },
+                    { $0.albumName }
+                ])
+                
+                // When is filtering
+                // Sort the filtered data for display
+                displayManager.displayStreamData = apiService.sortStreams(streamData: displayManager.displayStreamData, streamType: selection, shouldReassignRanks: false)
+            } else {
+                // When is not filtering, sort the original data
+                displayManager.displayStreamData = apiService.sortStreams(streamData: streamData, streamType: selection, shouldReassignRanks: true)
+                apiService.dailyStreams?.streamData = displayManager.displayStreamData
+            }
+        }
     }
     
     // Pass to ToolBarTextField's onChange
