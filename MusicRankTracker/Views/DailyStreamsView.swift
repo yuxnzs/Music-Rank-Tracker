@@ -182,6 +182,7 @@ struct DailyStreamsView: View {
         NavigationLink {
             MusicDetailView(artistInfo: dailyStreams.artistInfo, streamData: streamData, lastViewedMusicId: $lastViewedMusicId)
                 .onAppear {
+                    UIApplication.shared.endEditing() // Make sure the keyboard is closed when the view appears
                     withAnimation {
                         isShowingTabBar = false
                     }
