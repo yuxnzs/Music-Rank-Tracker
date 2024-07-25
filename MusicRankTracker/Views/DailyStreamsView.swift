@@ -143,7 +143,7 @@ struct DailyStreamsView: View {
         displayManager.displayStreamType = selection // Update displayStreamType when sorting changes
         
         withAnimation(.linear) {
-            if displayManager.isFiltering {
+            if displayManager.isDailyFiltering {
                 // When Daily switch to Total or vice versa, sort original data first then filter
                 // Make sure when is filtering and changing the sorting type, the rank is displayed based on the sorting type
                 // And also ensure the the original data sorting order display the same sorting type after stop filtering
@@ -171,9 +171,9 @@ struct DailyStreamsView: View {
         
         if searchText.wrappedValue.isEmpty {
             displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
-            displayManager.isFiltering = false
+            displayManager.isDailyFiltering = false
         } else {
-            displayManager.isFiltering = true
+            displayManager.isDailyFiltering = true
         }
     }
     
@@ -187,7 +187,7 @@ struct DailyStreamsView: View {
                 // So need to handle it manually
                 if displayManager.dailySearchText.isEmpty {
                     displayManager.displayStreamData = apiService.dailyStreams?.streamData ?? []
-                    displayManager.isFiltering = false
+                    displayManager.isDailyFiltering = false
                 }
             }
         }

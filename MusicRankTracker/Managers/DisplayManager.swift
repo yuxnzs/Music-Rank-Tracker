@@ -6,7 +6,7 @@ class DisplayManager: ObservableObject {
     @Published var dailyArtistName: String = ""
     @Published var dailySearchText: String = ""
     @Published var isDailySearchTextFieldShowing: Bool = false
-    @Published var isFiltering: Bool = false
+    @Published var isDailyFiltering: Bool = false
     @Published var musicType: String = "Songs"
     @Published var sortingStreamType: String = "Daily"
 
