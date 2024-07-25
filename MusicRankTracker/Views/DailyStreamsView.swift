@@ -149,15 +149,10 @@ struct DailyStreamsView: View {
                 // And also ensure the the original data sorting order display the same sorting type after stop filtering
                 apiService.dailyStreams?.streamData = apiService.sortStreams(streamData: streamData, streamType: selection, shouldReassignRanks: true)
                 
-                // Filter before sorting display data
                 filterAndUpdateDisplayStreamData(keySelectors: [
                     { $0.musicName },
                     { $0.albumName }
                 ])
-                
-                // When is filtering
-                // Sort the filtered data for display
-                displayManager.displayStreamData = apiService.sortStreams(streamData: displayManager.displayStreamData, streamType: selection, shouldReassignRanks: false)
             } else {
                 // When is not filtering, sort the original data
                 displayManager.displayStreamData = apiService.sortStreams(streamData: streamData, streamType: selection, shouldReassignRanks: true)
