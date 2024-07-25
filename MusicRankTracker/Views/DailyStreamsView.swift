@@ -106,8 +106,8 @@ struct DailyStreamsView: View {
                         .padding(.horizontal)
                     
                     Picker("Stream Type", selection: $displayManager.displayStreamType) {
-                        Text("Daily Streams").tag("daily")
-                        Text("Total Streams").tag("total")
+                        Text("Daily Streams").tag("Daily")
+                        Text("Total Streams").tag("Total")
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()

@@ -33,7 +33,7 @@ struct StreamInfo: View {
                         
                         // Use Group to avoid repeating modifiers
                         Group {
-                            if streamType == "daily" {
+                            if streamType == "Daily" {
                                 Text("Daily Streams: \(streamData.dailyStreams)")
                             } else {
                                 Text("Total Streams: \(streamData.totalStreams)")

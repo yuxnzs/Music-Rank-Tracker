@@ -2,7 +2,7 @@ import Foundation
 
 class DisplayManager: ObservableObject {
     @Published var displayStreamData: [StreamData] = []
-    @Published var displayStreamType: String = "daily"
+    @Published var displayStreamType: String = "Daily"
     @Published var dailyArtistName: String = ""
     @Published var dailySearchText: String = ""
     @Published var isDailySearchTextFieldShowing: Bool = false
