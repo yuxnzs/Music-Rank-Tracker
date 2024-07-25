@@ -26,14 +26,14 @@ struct DailyStreamsView: View {
                             TypePicker(
                                 text: "Type",
                                 selection: $displayManager.musicType,
-                                options: ["songs", "albums"],
+                                options: ["Songs", "Albums"],
                                 width: 130
                             )
                             
                             TypePicker(
                                 text: "Sort by",
                                 selection: $displayManager.sortingStreamType,
-                                options: ["daily", "total"],
+                                options: ["Daily", "Total"],
                                 onChange: handleTypeChange
                             )
                         }

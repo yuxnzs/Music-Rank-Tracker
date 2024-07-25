@@ -27,7 +27,7 @@ struct TypePicker: View {
             
             Picker(text, selection: $selection) {
                 ForEach(options, id: \.self) { option in
-                    Text(option.capitalized).tag(option)
+                    Text(option).tag(option)
                 }
             }
             .onChange(of: selection) {

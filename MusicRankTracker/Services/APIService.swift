@@ -29,7 +29,7 @@ class APIService: ObservableObject {
     func getDailyStreams(artist: String, musicType: String, streamType: String) async -> [StreamData] {
         do {
             // Specify the type to let the compiler know what type to pass to the fetchData function
-            let dailyStreams: DailyStreams = try await fetchData(path: "daily-streams/", params: "\(artist)/\(musicType)")
+            let dailyStreams: DailyStreams = try await fetchData(path: "daily-streams/", params: "\(artist)/\(musicType.lowercased())")
             
             let sortedData = sortStreams(streamData: dailyStreams.streamData, streamType: streamType, shouldReassignRanks: true)
             
@@ -54,11 +54,11 @@ class APIService: ObservableObject {
         var sortedStreamData = streamData
         
         switch streamType {
-        case "daily":
+        case "Daily":
             sortedStreamData.sort {
                 $0.dailyStreams > $1.dailyStreams
             }
-        case "total":
+        case "Total":
             sortedStreamData.sort {
                 $0.totalStreams > $1.totalStreams
             }

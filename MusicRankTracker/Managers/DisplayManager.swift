@@ -7,8 +7,8 @@ class DisplayManager: ObservableObject {
     @Published var dailySearchText: String = ""
     @Published var isDailySearchTextFieldShowing: Bool = false
     @Published var isFiltering: Bool = false
-    @Published var musicType: String = "songs"
-    @Published var sortingStreamType: String = "daily"
+    @Published var musicType: String = "Songs"
+    @Published var sortingStreamType: String = "Daily"
 
     // For preview to insert dummy data
     init(displayStreamData: [StreamData] = []) {
