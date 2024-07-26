@@ -4,11 +4,34 @@ struct SearchToolbar: View {
     @Binding var isSearchTextFieldShowing: Bool
     @Binding var searchText: String
     @FocusState.Binding var isFocused: Bool
+    @Binding var isHistoryFilteringRanking: Bool
     let placeholderText: String
     let handleTextChange: (Binding<String>) -> Void
     let buttonIcon: String
     let filterButtonAction: () -> Void
     let mainButtonAction: () -> Void
+    
+    init(
+        isSearchTextFieldShowing: Binding<Bool>,
+        searchText: Binding<String>,
+        isFocused: FocusState<Bool>.Binding,
+        isHistoryFilteringRanking: Binding<Bool> = .constant(false),
+        placeholderText: String,
+        handleTextChange: @escaping (Binding<String>) -> Void,
+        buttonIcon: String,
+        filterButtonAction: @escaping () -> Void,
+        mainButtonAction: @escaping () -> Void
+    ) {
+        self._isSearchTextFieldShowing = isSearchTextFieldShowing
+        self._searchText = searchText
+        self._isFocused = isFocused
+        self._isHistoryFilteringRanking = isHistoryFilteringRanking
+        self.placeholderText = placeholderText
+        self.handleTextChange = handleTextChange
+        self.buttonIcon = buttonIcon
+        self.filterButtonAction = filterButtonAction
+        self.mainButtonAction = mainButtonAction
+    }
     
     var body: some View {
         HStack(spacing: 10) {
@@ -17,6 +40,7 @@ struct SearchToolbar: View {
                     ToolBarTextField(
                         searchText: $searchText,
                         isFocused: $isFocused,
+                        isHistoryFilteringRanking: $isHistoryFilteringRanking,
                         placeholderText: placeholderText,
                         onChange: handleTextChange
                     )
@@ -38,7 +62,8 @@ struct SearchToolbar: View {
                     mainButtonAction()
                 } label: {
                     Image(systemName: buttonIcon)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(isHistoryFilteringRanking ? Color.blue : Color.black)
+                        .shadow(color: isHistoryFilteringRanking ? Color.blue.opacity(0.5) : Color.clear, radius: 3)
                     // Set fixed size to ensure that all passed-in icons won't affect the layout
                         .frame(width: 11)
                 }
