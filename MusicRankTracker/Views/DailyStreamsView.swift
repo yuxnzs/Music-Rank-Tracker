@@ -84,7 +84,7 @@ struct DailyStreamsView: View {
                         isFocused: $isFocused,
                         placeholderText: "Enter song or album name",
                         handleTextChange: handleTextChange,
-                        buttonIcon: "chart.bar",
+                        mainButtonIcon: "chart.bar",
                         filterButtonAction: filterButtonAction,
                         mainButtonAction: {
                             isStreamTypeSheetPresented.toggle()

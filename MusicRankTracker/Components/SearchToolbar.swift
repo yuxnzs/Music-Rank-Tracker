@@ -7,7 +7,7 @@ struct SearchToolbar: View {
     @Binding var isHistoryFilteringRanking: Bool
     let placeholderText: String
     let handleTextChange: (Binding<String>) -> Void
-    let buttonIcon: String
+    let mainButtonIcon: String
     let filterButtonAction: () -> Void
     let mainButtonAction: () -> Void
     
@@ -18,7 +18,7 @@ struct SearchToolbar: View {
         isHistoryFilteringRanking: Binding<Bool> = .constant(false),
         placeholderText: String,
         handleTextChange: @escaping (Binding<String>) -> Void,
-        buttonIcon: String,
+        mainButtonIcon: String,
         filterButtonAction: @escaping () -> Void,
         mainButtonAction: @escaping () -> Void
     ) {
@@ -28,7 +28,7 @@ struct SearchToolbar: View {
         self._isHistoryFilteringRanking = isHistoryFilteringRanking
         self.placeholderText = placeholderText
         self.handleTextChange = handleTextChange
-        self.buttonIcon = buttonIcon
+        self.mainButtonIcon = mainButtonIcon
         self.filterButtonAction = filterButtonAction
         self.mainButtonAction = mainButtonAction
     }
@@ -61,7 +61,7 @@ struct SearchToolbar: View {
                 Button{
                     mainButtonAction()
                 } label: {
-                    Image(systemName: buttonIcon)
+                    Image(systemName: mainButtonIcon)
                         .foregroundStyle(isHistoryFilteringRanking ? Color.blue : Color.black)
                         .shadow(color: isHistoryFilteringRanking ? Color.blue.opacity(0.5) : Color.clear, radius: 3)
                     // Set fixed size to ensure that all passed-in icons won't affect the layout
@@ -80,7 +80,7 @@ struct SearchToolbar: View {
         isFocused: FocusState<Bool>().projectedValue,
         placeholderText: "Enter song or album name",
         handleTextChange: { _ in },
-        buttonIcon: "chart.bar",
+        mainButtonIcon: "chart.bar",
         filterButtonAction: { },
         mainButtonAction: { }
     )
