@@ -11,6 +11,9 @@ class APIService: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var alertMessage: String? = nil
     
+    // Since original data not include release date to sort, need to save a copy of original release date sorted data
+    var originalBillboardHistoryData: [BillboardHistoryData] = []
+    
     let baseURL: String = Config.baseURL
     
     // For preview to insert dummy data
@@ -78,7 +81,7 @@ class APIService: ObservableObject {
         return sortedStreamData
     }
     
-    func filterData<T>(items: [T], searchText: String, keySelectors: [(T) -> String?]) -> [T] {
+    func filterData<T>(items: [T], searchText: String, exactMatch: Bool = false, keySelectors: [(T) -> String?]) -> [T] {
         guard !searchText.isEmpty else { return [] }
         let lowercasedSearchText = searchText.lowercased()
         
@@ -86,8 +89,13 @@ class APIService: ObservableObject {
             // Apply each key selector and check if any of the keys contain the search text
             keySelectors.contains { keySelector in
                 // keySelector(item)?.lowercased() invokes the keySelector function which extracts a specific string field (like musicName or albumName) from the item, converts it to lowercase, and returns it
-                if let key = keySelector(item)?.lowercased(), key.contains(lowercasedSearchText) {
-                    return true
+                if let key = keySelector(item)?.lowercased() {
+                    // If isHistoryFilteringRanking from BillboardHistoryView is true, only match exact rank
+                    if exactMatch {
+                        return key == lowercasedSearchText
+                    } else {
+                        return key.contains(lowercasedSearchText)
+                    }
                 }
                 return false
             }
@@ -108,16 +116,49 @@ class APIService: ObservableObject {
         }
     }
     
-    func getBillboardHistory(artist: String) async {
+    func getBillboardHistory(artist: String, sortType: String) async -> [BillboardHistoryData] {
         do {
             let billboardHistory: BillboardHistory = try await fetchData(path: "billboard-history/", params: artist)
             
+            // Set originalBillboardHistoryData first, so that sortHistoryData won't return empty data
+            self.originalBillboardHistoryData = billboardHistory.historyData
+            
+            let sortedData = sortHistoryData(historyData: billboardHistory.historyData, sortType: sortType)
+            
             DispatchQueue.main.async {
-                self.billboardHistory = billboardHistory
+                self.billboardHistory = BillboardHistory(artistInfo: billboardHistory.artistInfo, historyData: sortedData)
             }
+            
+            return sortedData
         } catch {
             print("Error fetching billboard history: \(error)")
+            DispatchQueue.main.async {
+                self.alertMessage = "No billboard history available for \(artist)"
+                self.showAlert = true
+            }
+            return []
         }
+    }
+    
+    func sortHistoryData(historyData: [BillboardHistoryData], sortType: String) -> [BillboardHistoryData] {
+        var sortedHistoryData = historyData
+        
+        switch sortType {
+        case "Release Date":
+            sortedHistoryData = originalBillboardHistoryData // Return original data sorted by release date
+        case "Peak Position":
+            sortedHistoryData.sort {
+                $0.peakPosition < $1.peakPosition
+            }
+        case "Weeks on Chart":
+            sortedHistoryData.sort {
+                $0.weeksOnChart > $1.weeksOnChart
+            }
+        default:
+            break
+        }
+        
+        return sortedHistoryData
     }
     
     func getBillboardDataByDate(date: String) async {
