@@ -62,8 +62,8 @@ struct SearchToolbar: View {
                     mainButtonAction()
                 } label: {
                     Image(systemName: mainButtonIcon)
-                        .foregroundStyle(isHistoryFilteringRanking ? Color.blue : Color.black)
-                        .shadow(color: isHistoryFilteringRanking ? Color.blue.opacity(0.5) : Color.clear, radius: 3)
+                        .foregroundStyle(isHistoryFilteringRanking ? Color.yellow : Color.black)
+                        .shadow(color: isHistoryFilteringRanking ? Color.yellow.opacity(0.5) : Color.clear, radius: 3)
                     // Set fixed size to ensure that all passed-in icons won't affect the layout
                         .frame(width: 11)
                 }
