@@ -7,8 +7,6 @@ struct DailyStreamsView: View {
     @Binding var isShowingTabBar: Bool
     let bottomSafeArea: CGFloat
     
-    @State var isLoading: Bool = false
-    
     @State private var isStreamTypeSheetPresented: Bool = false
     
     @FocusState private var isFocused: Bool
@@ -42,11 +40,11 @@ struct DailyStreamsView: View {
                     .frame(height: 30)
                     .padding(.horizontal)
                     
-                    SearchBar(isLoading: $isLoading, artistName: $displayManager.dailyArtistName, onSearch: searchArtist)
+                    SearchBar(isLoading: $displayManager.isDailyLoading, artistName: $displayManager.dailyArtistName, onSearch: searchArtist)
                     // Equal bottom padding in this View
                         .padding(.bottom, 20)
                     
-                    if isLoading {
+                    if displayManager.isDailyLoading {
                         ProgressView()
                     } else {
                         if let dailyStreams = apiService.dailyStreams {

@@ -5,7 +5,6 @@ struct BillboardHistoryView: View {
     @EnvironmentObject var displayManager: DisplayManager
     let bottomSafeArea: CGFloat
     
-    @State private var isLoading: Bool = false
     @State private var artistName: String = ""
     @FocusState private var isFocused: Bool
     
@@ -26,12 +25,12 @@ struct BillboardHistoryView: View {
                     .frame(height: 30)
                     .padding(.horizontal)
                     
-                    SearchBar(isLoading: $isLoading, artistName: $artistName, onSearch: getBillboardHistory)
+                    SearchBar(isLoading: $displayManager.isHistoryLoading, artistName: $artistName, onSearch: getBillboardHistory)
                     // Equal bottom padding in this View
                         .padding(.bottom, 20)
                         .environmentObject(apiService)
                     
-                    if isLoading {
+                    if displayManager.isHistoryLoading {
                         ProgressView()
                     } else {
                         if let billboardHistory = apiService.billboardHistory {

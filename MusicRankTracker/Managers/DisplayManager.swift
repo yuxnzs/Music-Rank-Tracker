@@ -8,6 +8,7 @@ class DisplayManager: ObservableObject {
     @Published var dailySearchText: String = ""
     @Published var isDailySearchTextFieldShowing: Bool = false
     @Published var isDailyFiltering: Bool = false
+    @Published var isDailyLoading: Bool = false
     @Published var musicType: String = "Songs"
     @Published var sortingStreamType: String = "Daily"
     
@@ -18,6 +19,7 @@ class DisplayManager: ObservableObject {
     @Published var isHistorySearchTextFieldShowing: Bool = false
     @Published var isHistoryFiltering: Bool = false
     @Published var isHistoryFilteringRanking: Bool = false
+    @Published var isHistoryLoading: Bool = false
     @Published var sortingHistoryType: String = "Release Date"
     
     // For preview to insert dummy data
