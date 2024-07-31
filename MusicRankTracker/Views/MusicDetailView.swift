@@ -132,7 +132,7 @@ struct MusicDetailView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.bottom, 40)
+                .padding(.bottom, 30)
             }
             .onAppear {
                 if streamData.isCollaboration {
