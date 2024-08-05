@@ -51,6 +51,10 @@ struct BillboardHistoryView: View {
                     }
                 }
             }
+            // Close keyboard in each View instead of in ContentView to avoid components overriding parent's onTapGesture not working
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
             .navigationBarTitle("Billboard History")
             .toolbar {
                 // Center the SearchToolbar

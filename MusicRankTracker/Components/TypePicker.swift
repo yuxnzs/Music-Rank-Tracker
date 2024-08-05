@@ -33,6 +33,8 @@ struct TypePicker: View {
             .onChange(of: selection) {
                 onChange?(selection)
             }
+            // Override parent's onTapGesture to avoid closing keyboard when tapping on Picker
+            .onTapGesture {}
             .pickerStyle(MenuPickerStyle())
             .accentColor(.black)
             .padding(.horizontal)

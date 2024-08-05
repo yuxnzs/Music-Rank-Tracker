@@ -44,6 +44,8 @@ struct SearchToolbar: View {
                         placeholderText: placeholderText,
                         onChange: handleTextChange
                     )
+                    // Override parent's onTapGesture to avoid closing keyboard when tapping on TextField
+                    .onTapGesture {}
                 } else {
                     // Same width as TextField to avoid buttons moving when TextField is hidden
                     Spacer().frame(maxWidth: .infinity)
