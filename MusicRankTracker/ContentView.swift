@@ -24,14 +24,16 @@ struct ContentView: View {
                 .environmentObject(apiService)
                 .environmentObject(displayManager)
                 
-                if isShowingTabBar {
-                    VStack {
-                        // Custom TabBar
+                VStack {
+                    if isShowingTabBar {
                         CurveTabBar(selectedTab: $selectedTab)
+                        // Adds padding above the tab bar equal to the bottom safe area height to ensure it remains visible during the downward animation until fully exited
+                        // If no padding is added, the tab bar will disappear before the animation completes
+                            .padding(.top, geometry.safeAreaInsets.bottom)
+                            .transition(.move(edge: .bottom))
                     }
-                    .animation(.easeInOut, value: isShowingTabBar)
-                    .transition(.move(edge: .bottom))
                 }
+                .animation(.easeInOut, value: isShowingTabBar)
             }
             .onAppear {
                 addKeyboardObservers()
