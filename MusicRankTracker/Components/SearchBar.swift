@@ -52,7 +52,7 @@ struct SearchBar: View {
                 }
                 disableButtonTemporarily()
             } label: {
-                Text("Serach")
+                Text("Search")
                     .padding(.horizontal, 20)
                     .frame(height: 50)
                     .background(.black)
