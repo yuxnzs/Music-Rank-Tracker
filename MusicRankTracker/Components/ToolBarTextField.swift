@@ -43,12 +43,12 @@ struct ToolBarTextField: View {
             .overlay {
                 HStack {
                     Spacer()
-                    // Close keyboard funtionality for .numberPad
+                    // Clear text
                     Button {
-                        UIApplication.shared.endEditing()
+                        searchText = ""
                     } label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
-                            .foregroundColor(.gray)
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray.opacity(0.5))
                             .font(.system(size: 13))
                     }
                 }
