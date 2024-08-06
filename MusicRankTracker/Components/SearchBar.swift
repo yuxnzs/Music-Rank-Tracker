@@ -46,7 +46,9 @@ struct SearchBar: View {
                 isLoading = true
                 Task {
                     await onSearch()
-                    isLoading = false
+                    DispatchQueue.main.async {
+                        isLoading = false  // Ensure UI update is performed on the main thread
+                    }
                 }
                 disableButtonTemporarily()
             } label: {
