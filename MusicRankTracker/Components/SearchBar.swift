@@ -6,6 +6,7 @@ struct SearchBar: View {
     
     // To avoid multiple taps on the search button
     @State private var isButtonDisabled = false
+    @FocusState private var isFocused: Bool
     
     // Pass in function for Button action
     var onSearch: () async -> Void
@@ -15,9 +16,29 @@ struct SearchBar: View {
             TextField("Enter artist name", text: $artistName)
             // Override parent's onTapGesture to avoid closing keyboard when tapping on TextField
                 .onTapGesture {}
-                .padding(.horizontal, 10)
+                .focused($isFocused)
+                .padding(.leading, 10)
+                .padding(.trailing, 35)
                 .padding(.vertical, 5)
                 .frame(height: 50)
+                .overlay {
+                    HStack {
+                        Spacer()
+                        // Clear text
+                        Button {
+                            artistName = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray.opacity(0.5))
+                                .font(.system(size: 18))
+                        }
+                        .padding(.trailing, 10)
+                        // Show clear button when keyboard is displayed and artistName is not empty
+                        .opacity(isFocused && !artistName.isEmpty ? 1 : 0)
+                        .animation(.easeInOut, value: isFocused)
+                        .animation(.easeInOut, value: artistName)
+                    }
+                }
             
             Button {
                 UIApplication.shared.endEditing() // Close keyboard when button is tapped
