@@ -16,6 +16,7 @@ struct SearchBar: View {
             TextField("Enter artist name", text: $artistName)
             // Override parent's onTapGesture to avoid closing keyboard when tapping on TextField
                 .onTapGesture {}
+                .onSubmit { performSearch() }
                 .focused($isFocused)
                 .padding(.leading, 10)
                 .padding(.trailing, 35)
@@ -41,16 +42,7 @@ struct SearchBar: View {
                 }
             
             Button {
-                UIApplication.shared.endEditing() // Close keyboard when button is tapped
-                if artistName.isEmpty { return }
-                isLoading = true
-                Task {
-                    await onSearch()
-                    DispatchQueue.main.async {
-                        isLoading = false  // Ensure UI update is performed on the main thread
-                    }
-                }
-                disableButtonTemporarily()
+                performSearch()
             } label: {
                 Text("Search")
                     .padding(.horizontal, 20)
@@ -65,6 +57,20 @@ struct SearchBar: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal)
         .padding(.top)
+    }
+    
+    private func performSearch() {
+        UIApplication.shared.endEditing()
+        if artistName.isEmpty { return }
+        
+        isLoading = true
+        Task {
+            await onSearch()
+            DispatchQueue.main.async {
+                isLoading = false  // Ensure UI update is performed on the main thread
+            }
+        }
+        disableButtonTemporarily()
     }
     
     // Disable button for 5 seconds
