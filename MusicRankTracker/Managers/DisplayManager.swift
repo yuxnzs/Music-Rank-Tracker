@@ -3,7 +3,7 @@ import Foundation
 class DisplayManager: ObservableObject {
     // For DailyStreamsView
     @Published var displayStreamData: [StreamData] = []
-    @Published var displayStreamType: String = "Daily"
+    @Published var displayStreamType: String = "Daily" // Used to only display the stream type, not the sorting type
     @Published var dailyArtistName: String = ""
     @Published var dailySearchText: String = ""
     @Published var isDailySearchTextFieldShowing: Bool = false
