@@ -136,6 +136,8 @@ struct DailyStreamsView: View {
     func searchArtist() async -> Void {
         apiService.dailyStreams = nil // Reset dailyStreams, avoid next search shows previous result before new data loaded
         displayManager.displayStreamData = await apiService.getDailyStreams(artist: displayManager.dailyArtistName, musicType: displayManager.musicType, streamType: displayManager.sortingStreamType)
+        // Filter data every time when user searches artist
+        handleTextChange($displayManager.dailySearchText)
     }
     
     // Pass to TypePicker's onChange
