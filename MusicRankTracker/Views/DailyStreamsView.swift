@@ -114,7 +114,7 @@ struct DailyStreamsView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
                     
-                    Text(displayManager.displayStreamType == "daily" ? "Show daily stream counts" : "Show total stream counts")
+                    Text(displayManager.displayStreamType == "Daily" ? "Show daily stream counts" : "Show total stream counts")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
