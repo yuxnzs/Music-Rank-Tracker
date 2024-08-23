@@ -140,9 +140,10 @@ struct DailyStreamsView: View {
     
     // Pass to TypePicker's onChange
     func handleTypeChange(_ selection: String) {
-        guard let streamData = apiService.dailyStreams?.streamData else { return }
+        // Update displayStreamType when sorting changes
+        displayManager.displayStreamType = selection
         
-        displayManager.displayStreamType = selection // Update displayStreamType when sorting changes
+        guard let streamData = apiService.dailyStreams?.streamData else { return }
         
         withAnimation(.linear) {
             if displayManager.isDailyFiltering {
