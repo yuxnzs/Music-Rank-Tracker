@@ -14,7 +14,7 @@ struct ArtistItem: View {
                     .scaledToFill()
                     .clipShape(Circle())
             } placeholder: {
-                ImagePlaceholder()
+                LoadingPlaceholder()
                     .clipShape(Circle())
             }
             .frame(width: 90, height: 90)

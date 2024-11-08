@@ -35,7 +35,7 @@ struct MusicDetailView: View {
                             .resizable()
                             .scaledToFit()
                     } placeholder: {
-                        ImagePlaceholder()
+                        LoadingPlaceholder()
                         // Approximate height for 640 x 640 image after scaledToFit() on iPhone 15
                             .frame(height: 393)
                     }

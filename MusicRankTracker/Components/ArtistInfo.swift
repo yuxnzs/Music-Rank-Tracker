@@ -23,7 +23,7 @@ struct ArtistInfo: View {
                         .scaledToFill()
                         .clipShape(Circle())
                 } placeholder: {
-                    ImagePlaceholder()
+                    LoadingPlaceholder()
                         .clipShape(Circle())
                 }
                 .frame(width: 70, height: 70)

@@ -21,7 +21,7 @@ struct StreamInfo: View {
                             .resizable()
                             .scaledToFill()
                     } placeholder: {
-                        ImagePlaceholder()
+                        LoadingPlaceholder()
                     }
                     .frame(width: 65, height: 65)
                     .clipped()

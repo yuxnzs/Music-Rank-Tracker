@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ImagePlaceholder: View {
+struct LoadingPlaceholder: View {
     @State private var isAnimating = false
     
     var body: some View {
@@ -15,5 +15,5 @@ struct ImagePlaceholder: View {
 }
 
 #Preview {
-    ImagePlaceholder()
+    LoadingPlaceholder()
 }
