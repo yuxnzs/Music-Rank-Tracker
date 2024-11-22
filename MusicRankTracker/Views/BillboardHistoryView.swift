@@ -31,7 +31,7 @@ struct BillboardHistoryView: View {
                         .environmentObject(apiService)
                     
                     if displayManager.isHistoryLoading {
-                        ProgressView()
+                        LoadingBillboardHistoryView(bottomSafeArea: bottomSafeArea)
                     } else {
                         if let billboardHistory = apiService.billboardHistory {
                             // Artist info

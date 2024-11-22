@@ -45,7 +45,7 @@ struct DailyStreamsView: View {
                         .padding(.bottom, 20)
                     
                     if displayManager.isDailyLoading {
-                        ProgressView()
+                        LoadingDailyStreamsView(bottomSafeArea: bottomSafeArea)
                     } else {
                         if let dailyStreams = apiService.dailyStreams {
                             // Artist info
