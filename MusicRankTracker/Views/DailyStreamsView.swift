@@ -224,6 +224,7 @@ struct DailyStreamsView: View {
                         isShowingTabBar = true
                     }
                 }
+                .toolbarBackground(.hidden)
         } label: {
             StreamInfo(rank: streamData.rank, streamData: streamData, streamType: displayManager.displayStreamType)
             // Equal bottom padding in this View
