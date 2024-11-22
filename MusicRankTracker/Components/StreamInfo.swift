@@ -5,50 +5,100 @@ struct StreamInfo: View {
     let rank: Int
     let streamData: StreamData
     let streamType: String
+    let isPlaceholder: Bool
+    
+    init(rank: Int, streamData: StreamData, streamType: String, isPlaceholder: Bool = false) {
+        self.rank = rank
+        self.streamData = streamData
+        self.streamType = streamType
+        self.isPlaceholder = isPlaceholder
+    }
+    
+    // For LoadingDailyStreamsView
+    init(isPlaceholder: Bool, rank: Int) {
+        self.rank = rank
+        self.streamData = StreamData.placeholder() // Use placeholder() to create a StreamData instance
+        self.streamType = "Placeholder"
+        self.isPlaceholder = isPlaceholder
+    }
     
     var body: some View {
         HStack(spacing: 0) {
-            // Rank
-            Text("\(rank)")
-                .frame(width: rank < 100 ? 25 : 37, alignment: .center)
-                .font(.system(size: 18, weight: .bold))
-                .padding(.trailing)
-            
-            VStack {
-                HStack(spacing: 0) {
-                    WebImage(url: streamData.imageUrl) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } placeholder: {
+            if isPlaceholder {
+                // Rank
+                Text("\(rank)")
+                    .frame(width: rank < 100 ? 25 : 37, alignment: .center)
+                    .font(.system(size: 18, weight: .bold))
+                    .padding(.trailing)
+                
+                // Image and song info placeholder
+                VStack {
+                    HStack(spacing: 0) {
+                        // Image placeholder
                         LoadingPlaceholder()
-                    }
-                    .frame(width: 65, height: 65)
-                    .clipped()
-                    
-                    // Song title and streams
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(streamData.musicName)
-                            .font(.system(size: 18, weight: .bold))
+                            .frame(width: 65, height: 65)
                         
-                        // Use Group to avoid repeating modifiers
-                        Group {
-                            if streamType == "Daily" {
-                                Text("Daily Streams: \(streamData.dailyStreams)")
-                            } else {
-                                Text("Total Streams: \(streamData.totalStreams)")
-                            }
+                        // Song title and streams placeholder
+                        VStack(alignment: .leading, spacing: 5) {
+                            LoadingPlaceholder()
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                                .frame(width: 150, height: 20)
+                            
+                            LoadingPlaceholder()
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                                .frame(width: 200, height: 17)
                         }
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(.secondary)
+                        .padding(10)
                     }
-                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                // Container style
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.gray.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            } else {
+                // Rank
+                Text("\(rank)")
+                    .frame(width: rank < 100 ? 25 : 37, alignment: .center)
+                    .font(.system(size: 18, weight: .bold))
+                    .padding(.trailing)
+                
+                VStack {
+                    HStack(spacing: 0) {
+                        WebImage(url: streamData.imageUrl) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } placeholder: {
+                            LoadingPlaceholder()
+                        }
+                        .frame(width: 65, height: 65)
+                        .clipped()
+                        
+                        // Song title and streams
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(streamData.musicName)
+                                .font(.system(size: 18, weight: .bold))
+                            
+                            // Use Group to avoid repeating modifiers
+                            Group {
+                                if streamType == "Daily" {
+                                    Text("Daily Streams: \(streamData.dailyStreams)")
+                                } else {
+                                    Text("Total Streams: \(streamData.totalStreams)")
+                                }
+                            }
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundStyle(.secondary)
+                        }
+                        .padding(10)
+                    }
+                }
+                // Container style
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.gray.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            // Container style
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.gray.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         // Fixed height for single-line song titles
         .frame(height: 65)

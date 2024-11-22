@@ -3,6 +3,27 @@ import SDWebImageSwiftUI
 
 struct RankInfo: View {
     let historyData: BillboardHistoryData
+    let isPlaceholder: Bool
+    
+    init(historyData: BillboardHistoryData, isPlaceholder: Bool = false) {
+        self.historyData = historyData
+        self.isPlaceholder = isPlaceholder
+    }
+    
+    init(isPlaceholder: Bool) {
+        self.historyData = BillboardHistoryData(
+            song: "Placeholder",
+            artist: "Placeholder",
+            firstChartedPosition: 0,
+            firstChartedDate: "Placeholder",
+            lastChartedPosition: 0,
+            lastChartedDate: "Placeholder",
+            lastWeekPosition: nil,
+            peakPosition: 0,
+            weeksOnChart: 0
+        )
+        self.isPlaceholder = isPlaceholder
+    }
     
     var body: some View {
         DisclosureGroup {
@@ -16,7 +37,30 @@ struct RankInfo: View {
             ChartDetail(label: "Last Date", value: "\(historyData.lastChartedDate)")
             ChartDetail(label: "Months on Chart", value: String(format: "%.1f", Double(historyData.weeksOnChart) / 4.3), isLast: true)
         } label : {
-            VStack {
+            rankInfoLabel(isPlaceholder: isPlaceholder)
+        }
+        .disabled(isPlaceholder)
+        .tint(.black)
+        .padding(.horizontal)
+        .background(Color.gray.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .padding(.horizontal)
+    }
+    
+    private func rankInfoLabel(isPlaceholder: Bool) -> some View {
+        VStack {
+            if isPlaceholder {
+                VStack(alignment: .leading, spacing: 6) {
+                    LoadingPlaceholder()
+                        .frame(width: 200, height: 20)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    
+                    LoadingPlaceholder()
+                        .frame(width: 250, height: 17)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                }
+                .padding(.vertical, 10)
+            } else {
                 HStack(spacing: 0) {
                     // Song title and ranking info
                     VStack(alignment: .leading, spacing: 5) {
@@ -31,14 +75,9 @@ struct RankInfo: View {
                     .padding(.vertical, 10)
                 }
             }
-            .frame(height: 57) // Same visual height as StreamInfo
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .tint(.black)
-        .padding(.horizontal)
-        .background(Color.gray.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(.horizontal)
+        .frame(height: 57) // Same visual height as StreamInfo
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
