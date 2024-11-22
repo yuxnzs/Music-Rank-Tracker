@@ -35,4 +35,26 @@ struct StreamData: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case rank, musicName, albumName, albumType, totalTracks, trackNumber, duration, releaseDate, imageUrl, totalStreams, dailyStreams, popularity, availableMarkets, spotifyUrl, musicId, isCollaboration
     }
+    
+    // Placeholder instance for StreamInfo component
+    static func placeholder() -> StreamData {
+        return StreamData(
+            rank: 0,
+            musicName: "Placeholder",
+            albumName: "Placeholder",
+            albumType: "Placeholder",
+            totalTracks: 0,
+            trackNumber: 0,
+            duration: "0:00",
+            releaseDate: "Placeholder",
+            imageUrl: nil,
+            totalStreams: 0,
+            dailyStreams: 0,
+            popularity: 0,
+            availableMarkets: 0,
+            spotifyUrl: nil,
+            musicId: "Placeholder",
+            isCollaboration: false
+        )
+    }
 }
