@@ -33,7 +33,8 @@ struct InfoCard: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 12)
-        .frame(width: 180, height: 75)
+        .frame(maxWidth: .infinity)
+        .frame(height: 75)
         .background(Color(UIColor.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }

@@ -73,7 +73,7 @@ struct MusicDetailView: View {
                 .padding([.horizontal, .top])
                 
                 // Music Info
-                VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 13) {
                     InfoRow(dataItems: [
                         // Use trackNumber.map() to safely convert Int? to String
                         (data: streamData.trackNumber.map(DataItem.intData) ?? DataItem.stringData(nil), title: "Track Number"),
@@ -99,6 +99,7 @@ struct MusicDetailView: View {
                     }
                 }
                 .padding(.vertical, 20)
+                .padding(.horizontal, 13) // Padding for music info section
                 
                 // Artist Info
                 VStack(alignment: .leading) {

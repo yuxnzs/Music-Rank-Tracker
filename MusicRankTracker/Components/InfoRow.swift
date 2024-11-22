@@ -11,11 +11,9 @@ struct InfoRow: View {
     
     var body: some View {
         HStack {
-            Spacer()
-            
             // Transform data items into displayable format (String)
             // Handling nil inside the stringData case
-            ForEach(dataItems.compactMap { item -> (data: String, title: String)? in
+            ForEach(Array(dataItems.compactMap { item -> (data: String, title: String)? in
                 switch item.data {
                 case .intData(let intValue):
                     // thousands separator
@@ -27,10 +25,13 @@ struct InfoRow: View {
                     guard let stringValue = stringValue else { return nil }
                     return (data: stringValue, title: item.title)
                 }
-            }, id: \.title) { item in
+            }.enumerated()), id: \.element.title) { index, item in
                 InfoCard(data: item.data, title: item.title)
                 
-                Spacer()
+                // Padding between two InfoCards
+                if index == 0 {
+                    Spacer().frame(width: 13) // Corresponds to the padding of MusicDetailView's info section
+                }
             }
         }
         .frame(maxWidth: .infinity)
