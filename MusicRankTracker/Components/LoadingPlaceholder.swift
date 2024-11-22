@@ -5,9 +5,9 @@ struct LoadingPlaceholder: View {
     
     var body: some View {
         Color.gray
-            .opacity(isAnimating ? 0.15 : 0.1)
+            .opacity(isAnimating ? 0.25 : 0.1)
             .onAppear {
-                withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                     isAnimating.toggle()
                 }
             }
