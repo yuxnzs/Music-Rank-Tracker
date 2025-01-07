@@ -73,10 +73,10 @@ struct SearchBar: View {
         disableButtonTemporarily()
     }
     
-    // Disable button for 5 seconds
+    // Disable button for 3 seconds
     func disableButtonTemporarily() {
         isButtonDisabled = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             isButtonDisabled = false
         }
     }
