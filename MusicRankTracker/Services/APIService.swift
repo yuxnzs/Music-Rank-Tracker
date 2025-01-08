@@ -29,6 +29,7 @@ class APIService: ObservableObject {
         return try await AF.request(url).serializingDecodable(T.self).value
     }
     
+    @MainActor
     func getDailyStreams(artist: String, musicType: String, streamType: String) async -> [StreamData] {
         do {
             // Specify the type to let the compiler know what type to pass to the fetchData function
@@ -37,9 +38,7 @@ class APIService: ObservableObject {
             let sortedData = sortStreams(streamData: dailyStreams.streamData, streamType: streamType, shouldReassignRanks: true)
             
             // Update dailyStreams with API data and sorted data
-            DispatchQueue.main.async {
-                self.dailyStreams = DailyStreams(artistInfo: dailyStreams.artistInfo, date: dailyStreams.date, streamData: sortedData)
-            }
+            self.dailyStreams = DailyStreams(artistInfo: dailyStreams.artistInfo, date: dailyStreams.date, streamData: sortedData)
             
             return sortedData
         } catch {
@@ -102,20 +101,20 @@ class APIService: ObservableObject {
         }
     }
     
+    @MainActor
     func getCollaborators(musicId: String, isSong: Bool) async {
         do {
             let params = "isSong=\(isSong)&musicId=\(musicId)"
             
             let collaborators: [Artist] = try await fetchData(path: "collaborators?", params: params)
             
-            DispatchQueue.main.async {
-                self.collaborators = collaborators
-            }
+            self.collaborators = collaborators
         } catch {
             print("Error fetching collaborators: \(error)")
         }
     }
     
+    @MainActor
     func getBillboardHistory(artist: String, sortType: String) async -> [BillboardHistoryData] {
         do {
             let billboardHistory: BillboardHistory = try await fetchData(path: "billboard-history/", params: artist)
@@ -125,9 +124,7 @@ class APIService: ObservableObject {
             
             let sortedData = sortHistoryData(historyData: billboardHistory.historyData, sortType: sortType)
             
-            DispatchQueue.main.async {
-                self.billboardHistory = BillboardHistory(artistInfo: billboardHistory.artistInfo, historyData: sortedData)
-            }
+            self.billboardHistory = BillboardHistory(artistInfo: billboardHistory.artistInfo, historyData: sortedData)
             
             return sortedData
         } catch {
@@ -161,13 +158,12 @@ class APIService: ObservableObject {
         return sortedHistoryData
     }
     
+    @MainActor
     func getBillboardDataByDate(date: String) async {
         do {
             let billboardDataByDate: [BillboardDate] = try await fetchData(path: "billboard-date/", params: date)
             
-            DispatchQueue.main.async {
-                self.billboardDataByDate = billboardDataByDate
-            }
+            self.billboardDataByDate = billboardDataByDate
         } catch {
             print("Error fetching billboard data by date: \(error)")
         }
