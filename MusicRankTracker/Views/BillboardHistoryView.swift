@@ -42,6 +42,7 @@ struct BillboardHistoryView: View {
                             VStack {
                                 ForEach(displayManager.displayHistoryData) { historyData in
                                     RankInfo(historyData: historyData)
+                                        .padding(.horizontal)
                                     // Equal bottom padding in this View
                                         .padding(.bottom, 20)
                                 }
@@ -72,6 +73,8 @@ struct BillboardHistoryView: View {
                             displayManager.isHistoryFilteringRanking.toggle()
                         }
                     )
+                    .padding(.horizontal)
+                    .frame(width: UIScreen.main.bounds.width)
                     
                     Spacer().frame(maxWidth: .infinity)
                 }
@@ -165,6 +168,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2024-04-02",
                         lastWeekPosition: 31,
                         peakPosition: 1,
+                        peakChartedDate: "2024-04-02",
                         weeksOnChart: 22
                     ),
                     BillboardHistoryData(
@@ -176,6 +180,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2024-01-16",
                         lastWeekPosition: 87,
                         peakPosition: 2,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 8
                     ),
                     BillboardHistoryData(
@@ -187,6 +192,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-12-05",
                         lastWeekPosition: 76,
                         peakPosition: 3,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 5
                     ),
                     BillboardHistoryData(
@@ -198,6 +204,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-12-05",
                         lastWeekPosition: 81,
                         peakPosition: 5,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 5
                     ),
                     BillboardHistoryData(
@@ -209,6 +216,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-21",
                         lastWeekPosition: 47,
                         peakPosition: 7,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 3
                     ),
                     BillboardHistoryData(
@@ -220,6 +228,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-28",
                         lastWeekPosition: 69,
                         peakPosition: 9,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 4
                     ),
                     BillboardHistoryData(
@@ -231,6 +240,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-21",
                         lastWeekPosition: 50,
                         peakPosition: 10,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 3
                     ),
                     BillboardHistoryData(
@@ -242,6 +252,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-21",
                         lastWeekPosition: 59,
                         peakPosition: 12,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 3
                     ),
                     BillboardHistoryData(
@@ -253,6 +264,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-14",
                         lastWeekPosition: 14,
                         peakPosition: 14,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 2
                     ),
                     BillboardHistoryData(
@@ -264,6 +276,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-21",
                         lastWeekPosition: 73,
                         peakPosition: 16,
+                        peakChartedDate: "2024-01-16",
                         weeksOnChart: 3
                     ),
                     BillboardHistoryData(
@@ -275,6 +288,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-14",
                         lastWeekPosition: 20,
                         peakPosition: 20,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 2
                     ),
                     BillboardHistoryData(
@@ -286,6 +300,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-14",
                         lastWeekPosition: 28,
                         peakPosition: 28,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 2
                     ),
                     BillboardHistoryData(
@@ -297,6 +312,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-14",
                         lastWeekPosition: 29,
                         peakPosition: 29,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 2
                     ),
                     BillboardHistoryData(
@@ -308,6 +324,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-14",
                         lastWeekPosition: 30,
                         peakPosition: 30,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 2
                     ),
                     BillboardHistoryData(
@@ -319,6 +336,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-07",
                         lastWeekPosition: nil,
                         peakPosition: 31,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 1
                     ),
                     BillboardHistoryData(
@@ -330,6 +348,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-07",
                         lastWeekPosition: nil,
                         peakPosition: 36,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 1
                     ),
                     BillboardHistoryData(
@@ -341,6 +360,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-07",
                         lastWeekPosition: nil,
                         peakPosition: 39,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 1
                     ),
                     BillboardHistoryData(
@@ -352,6 +372,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-07",
                         lastWeekPosition: nil,
                         peakPosition: 40,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 1
                     ),
                     BillboardHistoryData(
@@ -363,6 +384,7 @@ struct BillboardHistoryView: View {
                         lastChartedDate: "2023-11-07",
                         lastWeekPosition: nil,
                         peakPosition: 43,
+                        peakChartedDate: "2023-11-07",
                         weeksOnChart: 1
                     )
                 ]
@@ -379,6 +401,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2024-04-02",
                     lastWeekPosition: 31,
                     peakPosition: 1,
+                    peakChartedDate: "2024-04-02",
                     weeksOnChart: 22
                 ),
                 BillboardHistoryData(
@@ -390,6 +413,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2024-01-16",
                     lastWeekPosition: 87,
                     peakPosition: 2,
+                    peakChartedDate: "2024-01-16",
                     weeksOnChart: 8
                 ),
                 BillboardHistoryData(
@@ -401,6 +425,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-12-05",
                     lastWeekPosition: 76,
                     peakPosition: 3,
+                    peakChartedDate: "2024-01-16",
                     weeksOnChart: 5
                 ),
                 BillboardHistoryData(
@@ -412,6 +437,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-12-05",
                     lastWeekPosition: 81,
                     peakPosition: 5,
+                    peakChartedDate: "2024-01-16",
                     weeksOnChart: 5
                 ),
                 BillboardHistoryData(
@@ -423,6 +449,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-21",
                     lastWeekPosition: 47,
                     peakPosition: 7,
+                    peakChartedDate: "2023-11-21",
                     weeksOnChart: 3
                 ),
                 BillboardHistoryData(
@@ -434,6 +461,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-28",
                     lastWeekPosition: 69,
                     peakPosition: 9,
+                    peakChartedDate: "2023-11-28",
                     weeksOnChart: 4
                 ),
                 BillboardHistoryData(
@@ -445,6 +473,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-21",
                     lastWeekPosition: 50,
                     peakPosition: 10,
+                    peakChartedDate: "2023-11-21",
                     weeksOnChart: 3
                 ),
                 BillboardHistoryData(
@@ -456,6 +485,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-21",
                     lastWeekPosition: 59,
                     peakPosition: 12,
+                    peakChartedDate: "2023-11-21",
                     weeksOnChart: 3
                 ),
                 BillboardHistoryData(
@@ -467,6 +497,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-14",
                     lastWeekPosition: 14,
                     peakPosition: 14,
+                    peakChartedDate: "2023-11-14",
                     weeksOnChart: 2
                 ),
                 BillboardHistoryData(
@@ -478,6 +509,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-21",
                     lastWeekPosition: 73,
                     peakPosition: 16,
+                    peakChartedDate: "2023-11-21",
                     weeksOnChart: 3
                 ),
                 BillboardHistoryData(
@@ -489,6 +521,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-14",
                     lastWeekPosition: 20,
                     peakPosition: 20,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 2
                 ),
                 BillboardHistoryData(
@@ -500,6 +533,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-14",
                     lastWeekPosition: 28,
                     peakPosition: 28,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 2
                 ),
                 BillboardHistoryData(
@@ -511,6 +545,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-14",
                     lastWeekPosition: 29,
                     peakPosition: 29,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 2
                 ),
                 BillboardHistoryData(
@@ -522,6 +557,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-14",
                     lastWeekPosition: 30,
                     peakPosition: 30,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 2
                 ),
                 BillboardHistoryData(
@@ -533,6 +569,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-07",
                     lastWeekPosition: nil,
                     peakPosition: 31,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 1
                 ),
                 BillboardHistoryData(
@@ -544,6 +581,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-07",
                     lastWeekPosition: nil,
                     peakPosition: 36,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 1
                 ),
                 BillboardHistoryData(
@@ -555,6 +593,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-07",
                     lastWeekPosition: nil,
                     peakPosition: 39,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 1
                 ),
                 BillboardHistoryData(
@@ -566,6 +605,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-07",
                     lastWeekPosition: nil,
                     peakPosition: 40,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 1
                 ),
                 BillboardHistoryData(
@@ -577,6 +617,7 @@ struct BillboardHistoryView: View {
                     lastChartedDate: "2023-11-07",
                     lastWeekPosition: nil,
                     peakPosition: 43,
+                    peakChartedDate: "2023-11-07",
                     weeksOnChart: 1
                 )
             ]
