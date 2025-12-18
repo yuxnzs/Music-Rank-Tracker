@@ -25,13 +25,14 @@ struct DailyStreamsView: View {
                                 text: "Type",
                                 selection: $displayManager.musicType,
                                 options: ["Songs", "Albums"],
-                                width: 130
+                                width: 120
                             )
                             
                             TypePicker(
                                 text: "Sort by",
                                 selection: $displayManager.sortingStreamType,
                                 options: ["Daily", "Total"],
+                                width: 110,
                                 onChange: handleTypeChange
                             )
                         }
@@ -92,6 +93,7 @@ struct DailyStreamsView: View {
                             isStreamTypeSheetPresented.toggle()
                         }
                     )
+                    .frame(width: UIScreen.main.bounds.width - 48) // Fixed width to avoid bar will be at the center when back from MusicDetailView
                 }
             }
             .sheet(isPresented: $isStreamTypeSheetPresented) {
