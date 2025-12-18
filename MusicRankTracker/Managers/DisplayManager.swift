@@ -22,6 +22,10 @@ class DisplayManager: ObservableObject {
     @Published var isHistoryLoading: Bool = false
     @Published var sortingHistoryType: String = "Release Date"
     
+    // For BillboardDateView
+    @Published var displayDateData: [BillboardHistoryData] = []
+    @Published var isBillboardDateLoading: Bool = false
+    
     // For preview to insert dummy data
     init(displayStreamData: [StreamData] = [], displayHistoryData: [BillboardHistoryData] = []) {
         self.displayStreamData = displayStreamData
