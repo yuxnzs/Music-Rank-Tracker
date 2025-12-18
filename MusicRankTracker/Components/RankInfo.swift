@@ -4,10 +4,12 @@ import SDWebImageSwiftUI
 struct RankInfo: View {
     let historyData: BillboardHistoryData
     let isPlaceholder: Bool
+    let isDateView: Bool
     
-    init(historyData: BillboardHistoryData, isPlaceholder: Bool = false) {
+    init(historyData: BillboardHistoryData, isPlaceholder: Bool = false, isDateView: Bool = false) {
         self.historyData = historyData
         self.isPlaceholder = isPlaceholder
+        self.isDateView = isDateView
     }
     
     init(isPlaceholder: Bool) {
@@ -20,9 +22,11 @@ struct RankInfo: View {
             lastChartedDate: "Placeholder",
             lastWeekPosition: nil,
             peakPosition: 0,
+            peakChartedDate: "Placeholder",
             weeksOnChart: 0
         )
         self.isPlaceholder = isPlaceholder
+        self.isDateView = false
     }
     
     var body: some View {
@@ -30,11 +34,12 @@ struct RankInfo: View {
             Spacer().padding(.top, 8)
             
             ChartDetail(label: "Song Title", value: "\(historyData.song)")
-            ChartDetail(label: "Peak Position", value: "\(historyData.peakPosition)")
             ChartDetail(label: "First Position", value: "\(historyData.firstChartedPosition)")
-            ChartDetail(label: "Last Position", value: "\(historyData.lastChartedPosition)")
             ChartDetail(label: "First Date", value: "\(historyData.firstChartedDate)")
+            ChartDetail(label: "Last Position", value: "\(historyData.lastChartedPosition)")
             ChartDetail(label: "Last Date", value: "\(historyData.lastChartedDate)")
+            ChartDetail(label: "Peak Position", value: "\(historyData.peakPosition)")
+            ChartDetail(label: "Peak Date", value: historyData.peakChartedDate ?? "N/A")
             ChartDetail(label: "Months on Chart", value: String(format: "%.1f", Double(historyData.weeksOnChart) / 4.3), isLast: true)
         } label : {
             rankInfoLabel(isPlaceholder: isPlaceholder)
@@ -44,7 +49,6 @@ struct RankInfo: View {
         .padding(.horizontal)
         .background(Color.gray.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(.horizontal)
     }
     
     private func rankInfoLabel(isPlaceholder: Bool) -> some View {
@@ -67,10 +71,16 @@ struct RankInfo: View {
                         Text(historyData.song)
                             .font(.system(size: 18, weight: .bold))
                         
-                        Text("Peak Position: \(historyData.peakPosition) • Weeks on Chart: \(historyData.weeksOnChart)")
-                            .font(.system(size: 14))
-                            .fontWeight(.bold)
-                            .foregroundStyle(.secondary)
+                        VStack {
+                            if isDateView {
+                                Text("\(historyData.artist) • Peak Position: \(historyData.peakPosition)")
+                            } else {
+                                Text("Peak Position: \(historyData.peakPosition) • Weeks on Chart: \(historyData.weeksOnChart)")
+                            }
+                        }
+                        .font(.system(size: 14))
+                        .fontWeight(.bold)
+                        .foregroundStyle(.secondary)
                     }
                     .padding(.vertical, 10)
                 }
@@ -134,6 +144,7 @@ struct ChartDetail: View {
             lastChartedDate: "2021-11-23",
             lastWeekPosition: nil,
             peakPosition: 55,
+            peakChartedDate: "2021-11-23",
             weeksOnChart: 1
         )
     )
