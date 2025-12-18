@@ -50,6 +50,7 @@ struct ToolBarTextField: View {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray.opacity(0.5))
                             .font(.system(size: 13))
+                            .padding(.trailing, 10)
                     }
                 }
             }

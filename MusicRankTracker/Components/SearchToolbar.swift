@@ -67,7 +67,7 @@ struct SearchToolbar: View {
                         .foregroundStyle(isHistoryFilteringRanking ? Color.yellow : Color.black)
                         .shadow(color: isHistoryFilteringRanking ? Color.yellow.opacity(0.5) : Color.clear, radius: 3)
                     // Set fixed size to ensure that all passed-in icons won't affect the layout
-                        .frame(width: 11)
+                        .frame(width: 21)
                 }
             }
         }

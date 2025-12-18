@@ -37,10 +37,9 @@ struct TypePicker: View {
             .onTapGesture {}
             .pickerStyle(MenuPickerStyle())
             .accentColor(.black)
-            .padding(.horizontal)
             .padding(.top)
             .frame(width: width, alignment: .leading)
-            .offset(x: -20)
+            .offset(x: -5)
         }
     }
 }
@@ -50,7 +49,7 @@ struct TypePicker: View {
         text: "Type",
         selection: .constant("songs"),
         options: ["songs", "albums"],
-        width: 130,
+        width: 120,
         onChange: { _ in }
     )
     .environmentObject(APIService())
