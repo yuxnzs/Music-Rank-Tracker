@@ -20,9 +20,10 @@ struct BillboardHistoryData: Codable, Identifiable {
     let lastChartedDate: String
     let lastWeekPosition: Int?
     let peakPosition: Int
+    let peakChartedDate: String?
     let weeksOnChart: Int
     
     enum CodingKeys: String, CodingKey {
-        case song, artist, firstChartedPosition, firstChartedDate, lastChartedPosition, lastChartedDate, lastWeekPosition, peakPosition, weeksOnChart
+        case song, artist, firstChartedPosition, firstChartedDate, lastChartedPosition, lastChartedDate, lastWeekPosition, peakPosition, peakChartedDate, weeksOnChart
     }
 }

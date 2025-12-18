@@ -4,7 +4,7 @@ import Alamofire
 class APIService: ObservableObject {
     @Published var dailyStreams: DailyStreams? = nil
     @Published var billboardHistory: BillboardHistory? = nil
-    @Published var billboardDataByDate: [BillboardDate]? = nil
+    @Published var billboardDataByDate: [BillboardHistoryData]? = nil
     
     @Published var collaborators: [Artist]? = nil
     
@@ -17,7 +17,7 @@ class APIService: ObservableObject {
     let baseURL: String = Config.baseURL
     
     // For preview to insert dummy data
-    init(dailyStreams: DailyStreams? = nil, billboardHistory: BillboardHistory? = nil, billboardDataByDate: [BillboardDate]? = nil) {
+    init(dailyStreams: DailyStreams? = nil, billboardHistory: BillboardHistory? = nil, billboardDataByDate: [BillboardHistoryData]? = nil) {
         self.dailyStreams = dailyStreams
         self.billboardHistory = billboardHistory
         self.billboardDataByDate = billboardDataByDate
@@ -159,13 +159,15 @@ class APIService: ObservableObject {
     }
     
     @MainActor
-    func getBillboardDataByDate(date: String) async {
+    func getBillboardDataByDate(date: String) async -> [BillboardHistoryData] {
         do {
-            let billboardDataByDate: [BillboardDate] = try await fetchData(path: "billboard-date/", params: date)
-            
+            let billboardDataByDate: [BillboardHistoryData] = try await fetchData(path: "billboard-date/", params: date)
             self.billboardDataByDate = billboardDataByDate
+            
+            return billboardDataByDate
         } catch {
             print("Error fetching billboard data by date: \(error)")
+            return []
         }
     }
 }
