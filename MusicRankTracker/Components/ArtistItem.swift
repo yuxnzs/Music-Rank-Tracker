@@ -6,6 +6,10 @@ struct ArtistItem: View {
     let name: String
     @Binding var isTapped: Bool
     
+    // Font size for artist name
+    let fontSize: CGFloat = 18
+    @State private var isTextTooLong: Bool = false
+    
     var body: some View {
         VStack(alignment: .center) {
             WebImage(url: imageUrl) { image in
@@ -21,13 +25,34 @@ struct ArtistItem: View {
             
             if isTapped {
                 Text(name)
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.system(size: fontSize, weight: .bold))
                     .frame(maxHeight: 20)
             } else {
-                Text(name)
-                    .font(.system(size: 18, weight: .bold))
-                    .frame(maxWidth: 90)
-                    .frame(maxHeight: 20)
+                // Write sperately to avoid blurry text bug
+                if isTextTooLong {
+                    Text(name)
+                        .font(.system(size: fontSize, weight: .bold))
+                        .fixedSize(horizontal: true, vertical: false) // Expand text and remove `...`
+                        .frame(maxWidth: 90, maxHeight: 20, alignment: isTextTooLong ? .leading : .center)
+                    // Right side gradient mask
+                        .mask(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    .init(color: .black, location: 0),
+                                    .init(color: .black, location: 0.7),
+                                    .init(color: .clear, location: 1)
+                                ]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                } else {
+                    // No mask if text is short
+                    Text(name)
+                        .font(.system(size: fontSize, weight: .bold))
+                        .fixedSize(horizontal: true, vertical: false)
+                        .frame(maxWidth: 90, maxHeight: 20, alignment: isTextTooLong ? .leading : .center)
+                }
             }
         }
         .onTapGesture {
@@ -35,6 +60,18 @@ struct ArtistItem: View {
                 isTapped.toggle()
             }
         }
+        .onAppear {
+            // Check if the text is too long
+            isTextTooLong = textWidth(name, font: UIFont.systemFont(ofSize: fontSize, weight: .bold)) > 90
+        }
+    }
+    
+    // Calculate the width of the text
+    func textWidth(_ text: String, font: UIFont) -> CGFloat {
+        // Set font attributes for text.size(withAttributes:)
+        let attributes = [NSAttributedString.Key.font: font]
+        // Return the calculated text width
+        return text.size(withAttributes: attributes).width
     }
 }
 
