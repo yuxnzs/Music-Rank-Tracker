@@ -15,6 +15,8 @@ struct MusicDetailView: View {
     
     @State private var isCollaboratorsLoading = false
     
+    @State private var imageHeight: CGFloat = 0
+    
     // Trigger when `isTapped: binding(for: index)` is changed
     private func binding(for index: Int) -> Binding<Bool> {
         return Binding<Bool>(
@@ -29,111 +31,133 @@ struct MusicDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                VStack {
+                // Image
+                GeometryReader { geometry in
+                    // offset > 0: scrolling down, offset < 0: scrolled up past the top
+                    let offset = geometry.frame(in: .global).minY // Top offset relative to the screen
+                    // Use max to prevent the image from shrinking when scroll down
+                    // The image will be at least the original size or larger
+                    let scale = max(1.0, 1.0 + (offset / 395)) // Scale size based on pull distance
                     WebImage(url: streamData.imageUrl) { image in
                         image
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
+                            .frame(width: UIScreen.main.bounds.width)
+                            .scaleEffect(scale, anchor: .top) // Scale from the top
+                            .offset(y: offset > 0 ? -offset : 0) // Fix image position at the top
                     } placeholder: {
                         LoadingPlaceholder()
-                        // Approximate height for 640 x 640 image after scaledToFit() on iPhone 15
                             .frame(height: 393)
+                            .scaleEffect(scale, anchor: .top)
+                            .offset(y: offset > 0 ? -offset : 0)
                     }
-                }
-                
-                // Header
-                VStack(spacing: 6) {
-                    Button {
-                        if let spotifyUrl = streamData.spotifyUrl {
-                            UIApplication.shared.open(spotifyUrl)
+                    .background(GeometryReader {gp -> Color in
+                        DispatchQueue.main.async {
+                            imageHeight = gp.size.height
                         }
-                    } label: {
-                        Text(streamData.musicName)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .buttonStyle(.plain)
-                    
-                    HStack(alignment: .bottom, spacing: 5) {
-                        // If is song, display album name and release year
-                        // If is album, check weather it's an album or compilation + release year
-                        if let albumName = streamData.albumName { // For song
-                            Text("\(albumName) • \(streamData.releaseDate.prefix(4))")
-                        } else if let albumType = streamData.albumType { // For album or compilation
-                            Text("\(albumType.capitalized) • \(streamData.releaseDate.prefix(4))")
-                        } else {
-                            Text(streamData.releaseDate.prefix(4))
-                        }
-                    }
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        return Color.clear
+                    })
                 }
-                .padding([.horizontal, .top])
+                .frame(height: imageHeight) // Image height
                 
-                // Music Info
-                VStack(alignment: .leading, spacing: 13) {
-                    InfoRow(dataItems: [
-                        // Use trackNumber.map() to safely convert Int? to String
-                        (data: streamData.trackNumber.map(DataItem.intData) ?? DataItem.stringData(nil), title: "Track Number"),
-                        (data: streamData.totalTracks.map(DataItem.intData) ?? DataItem.stringData(nil), title: "Total Tracks"),
-                        (data: DataItem.stringData(streamData.releaseDate), title: "Release Date")
-                    ])
-                    
-                    InfoRow(dataItems: [
-                        (data: DataItem.stringData(streamData.popularity.description), title: "Popularity"),
-                        (data: DataItem.stringData(streamData.duration), title: streamData.trackNumber != nil ? "Track Length" : "Album Length")
-                    ])
-                    
-                    InfoRow(dataItems: [
-                        (data: DataItem.intData(streamData.totalStreams), title: "Total Streams"),
-                        (data: DataItem.intData(streamData.dailyStreams), title: "Daily Streams")
-                    ])
-                    
-                    if let availableCountries = streamData.availableMarkets, let totalTrack = streamData.totalTracks {
-                        InfoRow(dataItems: [
-                            (data: DataItem.intData(streamData.totalStreams / totalTrack), title: "Avg Track Streams"),
-                            (data: DataItem.intData(availableCountries), title: "Available Countries")
-                        ])
-                    }
-                }
-                .padding(.vertical, 20)
-                .padding(.horizontal, 13) // Padding for music info section
-                
-                // Artist Info
-                VStack(alignment: .leading) {
-                    Text(streamData.isCollaboration ? "Artists" : "Artist")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .padding(.leading)
-                    
-                    // Render ProgressView before collaborators are loaded
-                    if isCollaboratorsLoading {
-                        ProgressView()
-                        // Fixed height matching ArtistItem's height
-                            .frame(height: 118)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    } else {
-                        if let collaborators = apiService.collaborators {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 20) {
-                                    ForEach(collaborators.indices, id: \.self) { index in
-                                        let collaborator = collaborators[index]
-                                        
-                                        ArtistItem(imageUrl: collaborator.image, name: collaborator.name, isTapped: binding(for: index))
-                                    }
-                                }
-                                .padding(.horizontal)
+                // Content
+                // Use Group to set background and prevent image overlap on iPad screen
+                Group {
+                    // Header
+                    VStack(spacing: 6) {
+                        Button {
+                            if let spotifyUrl = streamData.spotifyUrl {
+                                UIApplication.shared.open(spotifyUrl)
                             }
-                        } else {
-                            ArtistItem(imageUrl: artistInfo.image, name: artistInfo.name, isTapped: $isArtistNameTapped)
-                                .padding(.horizontal)
+                        } label: {
+                            Text(streamData.musicName)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .buttonStyle(.plain)
+                        
+                        HStack(alignment: .bottom, spacing: 5) {
+                            // If is song, display album name and release year
+                            // If is album, check weather it's an album or compilation + release year
+                            if let albumName = streamData.albumName { // For song
+                                Text("\(albumName) • \(streamData.releaseDate.prefix(4))")
+                            } else if let albumType = streamData.albumType { // For album or compilation
+                                Text("\(albumType.capitalized) • \(streamData.releaseDate.prefix(4))")
+                            } else {
+                                Text(streamData.releaseDate.prefix(4))
+                            }
+                        }
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding([.horizontal, .top])
+                    
+                    // Music Info
+                    VStack(alignment: .leading, spacing: 13) {
+                        InfoRow(dataItems: [
+                            // Use trackNumber.map() to safely convert Int? to String
+                            (data: streamData.trackNumber.map(DataItem.intData) ?? DataItem.stringData(nil), title: "Track Number"),
+                            (data: streamData.totalTracks.map(DataItem.intData) ?? DataItem.stringData(nil), title: "Total Tracks"),
+                            (data: DataItem.stringData(streamData.releaseDate), title: "Release Date")
+                        ])
+                        
+                        InfoRow(dataItems: [
+                            (data: DataItem.stringData(streamData.popularity.description), title: "Popularity"),
+                            (data: DataItem.stringData(streamData.duration), title: streamData.trackNumber != nil ? "Track Length" : "Album Length")
+                        ])
+                        
+                        InfoRow(dataItems: [
+                            (data: DataItem.intData(streamData.totalStreams), title: "Total Streams"),
+                            (data: DataItem.intData(streamData.dailyStreams), title: "Daily Streams")
+                        ])
+                        
+                        if let availableCountries = streamData.availableMarkets, let totalTrack = streamData.totalTracks {
+                            InfoRow(dataItems: [
+                                (data: DataItem.intData(streamData.totalStreams / totalTrack), title: "Avg Track Streams"),
+                                (data: DataItem.intData(availableCountries), title: "Available Countries")
+                            ])
                         }
                     }
+                    .padding(.vertical, 20)
+                    .padding(.horizontal, 13) // Padding for music info section
+                    
+                    // Artist Info
+                    VStack(alignment: .leading) {
+                        Text(streamData.isCollaboration ? "Artists" : "Artist")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .padding(.leading)
+                        
+                        // Render ProgressView before collaborators are loaded
+                        if isCollaboratorsLoading {
+                            ProgressView()
+                            // Fixed height matching ArtistItem's height
+                                .frame(height: 118)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        } else {
+                            if let collaborators = apiService.collaborators {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 20) {
+                                        ForEach(collaborators.indices, id: \.self) { index in
+                                            let collaborator = collaborators[index]
+                                            
+                                            ArtistItem(imageUrl: collaborator.image, name: collaborator.name, isTapped: binding(for: index))
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            } else {
+                                ArtistItem(imageUrl: artistInfo.image, name: artistInfo.name, isTapped: $isArtistNameTapped)
+                                    .padding(.horizontal)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 30)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.bottom, 30)
+                .background(.white)
             }
             .onAppear {
                 if streamData.isCollaboration {
