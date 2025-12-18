@@ -10,15 +10,19 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottom) {
-                VStack {
-                    switch selectedTab {
-                    case .dailyStreams:
-                        DailyStreamsView(isShowingTabBar: $isShowingTabBar, bottomSafeArea: geometry.safeAreaInsets.bottom)
-                    case .billboardHistory:
-                        BillboardHistoryView(bottomSafeArea: geometry.safeAreaInsets.bottom)
-                    case .billboardDate:
-                        BillboardDateView()
-                    }
+                // Pre-load all views to save the state when switching tabs
+                ZStack {
+                    DailyStreamsView(isShowingTabBar: $isShowingTabBar, bottomSafeArea: geometry.safeAreaInsets.bottom)
+                        .opacity(selectedTab == .dailyStreams ? 1 : 0)
+                        .allowsHitTesting(selectedTab == .dailyStreams)
+                    
+                    BillboardHistoryView(bottomSafeArea: geometry.safeAreaInsets.bottom)
+                        .opacity(selectedTab == .billboardHistory ? 1 : 0)
+                        .allowsHitTesting(selectedTab == .billboardHistory)
+                    
+                    BillboardDateView(bottomSafeArea: geometry.safeAreaInsets.bottom)
+                        .opacity(selectedTab == .billboardDate ? 1 : 0)
+                        .allowsHitTesting(selectedTab == .billboardDate)
                 }
                 .ignoresSafeArea()
                 .environmentObject(apiService)
@@ -27,8 +31,6 @@ struct ContentView: View {
                 VStack {
                     if isShowingTabBar {
                         CurveTabBar(selectedTab: $selectedTab)
-                        // Adds padding above the tab bar equal to the bottom safe area height to ensure it remains visible during the downward animation until fully exited
-                        // If no padding is added, the tab bar will disappear before the animation completes
                             .padding(.top, geometry.safeAreaInsets.bottom)
                             .transition(.move(edge: .bottom))
                     }
